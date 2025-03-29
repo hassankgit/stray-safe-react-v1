@@ -1,0 +1,17 @@
+.login {
+  &_wrapper {
+    padding: 10rem;
+  }
+}
+
+.input_wrapper {
+  width: 100%;
+  margin-bottom: 1rem;
+
+  input {
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+}

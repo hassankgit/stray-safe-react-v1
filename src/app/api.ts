@@ -6,7 +6,7 @@ export const apiInstance = new Api({
 
 export const api = {
     user: {
-      login: (username: string, password: string) =>
+      login: (username?: string | null, password?: string | null) =>
         apiInstance.user.loginCreate({ username, password }, { format: "json" }),
     },
     admin: {
