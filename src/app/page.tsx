@@ -15,16 +15,17 @@ export default function Home() {
 
   return (
     <div className={styles.app_wrapper}>
-      <div className={styles.app_left}>
+      <div className={styles.app_body}>
             <div className={styles.app_banner_top_wrapper}>
-              <img src="/images/straysafetext.png" className={styles.app_banner_top}/>
+              <div className={styles.app_banner_top_wrapper_logo}>
+                <img src="/images/straysafelogo.png" className={styles.app_banner_top_logo}/>
+                <img src="/images/straysafetext.png" className={styles.app_banner_top_text}/>
+              </div>
+                <Login/>
             </div>
             <div className={styles.app_banner_bottom_wrapper}>
-              <img src="/images/loginbannerbottomhalfnobackground.png" className={styles.app_banner_bottom}/>
+              <img src="/images/loginbannerwidebottomhalf.png" className={styles.app_banner_bottom}/>
             </div>
-      </div>
-      <div className={styles.app_right}>
-        <Login />
       </div>
     </div>
   );
