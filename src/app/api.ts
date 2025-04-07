@@ -2,9 +2,8 @@ import { Api } from "../swagger/swagger";
 
 const nodeEnv = process.env.NODE_ENV;
 
-var baseUrl = process.env.NEXT_PUBLIC_API_URL;
+let baseUrl = process.env.NEXT_PUBLIC_API_URL;
 if (nodeEnv == 'production') {
-    console.log("in prod environment")
     baseUrl = process.env.NEXT_PUBLIC_API_URL_PROD;
 }
 
