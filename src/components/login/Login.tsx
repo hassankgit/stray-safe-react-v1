@@ -5,7 +5,7 @@ import { Field } from '@base-ui-components/react/field';
 import { api } from "../../app/api"
 import React, { useState } from 'react';
 import { LoginRequest } from "@/swagger/swagger";
-import { Form, Input } from "@base-ui-components/react";
+import { Form } from "@base-ui-components/react";
 import { FaDog } from "react-icons/fa6";
 // async function handleLogin(loginRequest: LoginRequest) {
 
@@ -15,8 +15,8 @@ import { FaDog } from "react-icons/fa6";
 //   }
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
