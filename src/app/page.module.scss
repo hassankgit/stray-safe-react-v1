@@ -1,0 +1,98 @@
+@use "../styles/variables" as *;
+
+.app {
+  &_wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-color: $white;
+  }
+
+  &_body {
+    width: 100%;
+    height: 100%;
+    background-color: $primary;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &_right {
+    width: 100%;
+    height: 100%;
+    background-color: $white;
+  }
+  &_banner {
+    &_top_wrapper {
+      margin-top: 200px;
+      width: 212px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      animation: fadeSlideDown 0.8s ease-out forwards;
+      animation-delay: 0.45s;
+      z-index: 2;
+
+      &_logo {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+      }
+    }
+  
+    &_top {
+      padding-top:24rem;
+      width: 250px;
+
+      &_logo {
+        width: 56px;
+        height: 81px;
+      }
+      &_text {
+        width: 140px;
+        height: 81px;
+      }
+    }
+  
+    &_bottom_wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      z-index: 1;
+    }
+  
+    &_bottom {
+      width: 100%;
+      height: 100%;
+      // animation: fadeSlideUp 0.8s ease-out forwards;
+      // animation-delay: 0.45s;
+    }
+  }
+
+  @keyframes fadeSlideDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeSlideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+} 

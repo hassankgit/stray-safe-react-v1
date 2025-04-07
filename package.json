@@ -7,20 +7,23 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "updateSwagger" : "npx swagger-typescript-api generate -p ./src/swagger/swagger.json -o ./src/ -n ./swagger/swagger.ts"
+    "updateSwagger": "npx swagger-typescript-api generate -p ./src/swagger/swagger.json -o ./src/ -n ./swagger/swagger.ts"
   },
   "dependencies": {
+    "@base-ui-components/react": "^1.0.0-alpha.7",
+    "next": "15.2.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.2.4"
+    "react-icons": "^5.5.0",
+    "sass": "^1.86.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
-    "@eslint/eslintrc": "^3"
+    "typescript": "^5"
   }
 }

@@ -1,0 +1,65 @@
+@use "../../styles/_variables.sass" as *;
+
+.login {
+  &_section {
+    z-index: 3;
+    padding-top: 2rem;
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  &_info {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    width: 100%;
+  }
+
+  &_input {
+    color: black;
+    width: 100%;
+    background-color: white;
+    height: 40px;
+    font-family: 'Nunito';
+    font-size: 16px;
+    padding-left: 24px;
+    border: none;
+    border-radius: 10px;
+
+    &_wrapper {
+      width: 100%;
+      height: 44px;
+    }
+  }
+
+  &_submit {
+    color: $white;
+    width: 100%;
+    background-color: $secondary;
+    height: 40px;
+    font-family: 'Nunito';
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+
+    &_loading {
+      margin-top: 8px;
+      animation: floatUpDown 1s ease-in-out infinite;
+    }
+  }
+
+  @keyframes floatUpDown {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px); // adjust for how high you want it
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+}
