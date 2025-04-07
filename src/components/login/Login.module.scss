@@ -10,11 +10,11 @@
     flex-direction: column;
     width: 100%;
   }
-  
+
   &_info {
     display: flex;
     flex-direction: column;
-    gap: .5rem;
+    gap: 0.5rem;
     width: 100%;
   }
 
@@ -23,7 +23,7 @@
     width: 100%;
     background-color: white;
     height: 40px;
-    font-family: 'Nunito';
+    font-family: "Nunito";
     font-size: 16px;
     padding-left: 24px;
     border: none;
@@ -40,7 +40,7 @@
     width: 100%;
     background-color: $secondary;
     height: 40px;
-    font-family: 'Nunito';
+    font-family: "Nunito";
     font-size: 16px;
     border: none;
     border-radius: 10px;

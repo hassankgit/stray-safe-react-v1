@@ -12,9 +12,7 @@
   "paths": {
     "/Admin/AllUsers": {
       "get": {
-        "tags": [
-          "Admin"
-        ],
+        "tags": ["Admin"],
         "responses": {
           "200": {
             "description": "OK"
@@ -24,9 +22,7 @@
     },
     "/Submit": {
       "post": {
-        "tags": [
-          "Home"
-        ],
+        "tags": ["Home"],
         "parameters": [
           {
             "name": "Id",
@@ -57,9 +53,7 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "required": [
-                  "Image"
-                ],
+                "required": ["Image"],
                 "type": "object",
                 "properties": {
                   "Image": {
@@ -85,9 +79,7 @@
     },
     "/Login": {
       "post": {
-        "tags": [
-          "Home"
-        ],
+        "tags": ["Home"],
         "parameters": [
           {
             "name": "Username",
@@ -113,9 +105,7 @@
     },
     "/User/Login": {
       "post": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "requestBody": {
           "content": {
             "application/json": {
