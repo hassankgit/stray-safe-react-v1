@@ -1,16 +1,14 @@
 import { Api } from "../swagger/swagger";
-
-const nodeEnv = process.env.NODE_ENV;
+import { isProd } from "./util";
 
 let baseUrl = process.env.NEXT_PUBLIC_API_URL;
-if (nodeEnv == 'production') {
+if (isProd) {
     baseUrl = process.env.NEXT_PUBLIC_API_URL_PROD;
 }
 
 export const apiInstance = new Api({
   baseUrl: baseUrl,
 });
-
 
 // API Formatting:
 // Controller : {

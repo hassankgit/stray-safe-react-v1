@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { LoginRequest } from "@/swagger/swagger";
 import { Form } from "@base-ui-components/react";
 import { FaDog } from "react-icons/fa6";
+// import { useRouter } from "next/navigation"; 
 // async function handleLogin(loginRequest: LoginRequest) {
 
 //   const req = await api.user.login(loginRequest.username, loginRequest.password);
@@ -15,6 +16,7 @@ import { FaDog } from "react-icons/fa6";
 //   }
 
 export default function Login() {
+  // const router = useRouter(); // will be used to route the user to the dashboard
   // const [email, setEmail] = useState('');
   // const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
@@ -26,6 +28,7 @@ export default function Login() {
       errors={errors}
       onClearErrors={setErrors}
       onSubmit={async (event) => {
+        // router.push('/test/moreroute'); // add to end of onSubmit, make sure u get a 200 from login endpoint, then redirect to dashboard
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
 
