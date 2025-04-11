@@ -1,28 +1,17 @@
 "use client";
 import styles from "./page.module.scss";
-import Login from "../components/login/Login";
+import Register from "@/components/register/Register";
 
 const deployed = true;
 
-export default function Home() {
+export default function RegisterForm() {
   return (
     <div className={styles.app_wrapper}>
       <div className={styles.app_body}>
         <div className={styles.app_banner_top_wrapper}>
-          <div className={styles.app_banner_top_wrapper_logo}>
-            <img
-              src="/images/straysafelogo.png"
-              alt="straysafe logo"
-              className={styles.app_banner_top_logo}
-            />
-            <img
-              src="/images/straysafetext.png"
-              alt="stray safe text"
-              className={styles.app_banner_top_text}
-            />
-          </div>
+          <h1>let's get you started</h1>
           {deployed ? (
-            <Login />
+            <Register />
           ) : (
             <p style={{ margin: "20px", fontSize: "16px" }}> coming soon! </p>
           )}

@@ -7,18 +7,11 @@ import React, { useState } from "react";
 import { LoginRequest } from "@/swagger/swagger";
 import { Form } from "@base-ui-components/react";
 import { FaDog } from "react-icons/fa6";
-// import { useRouter } from "next/navigation"; 
-// async function handleLogin(loginRequest: LoginRequest) {
-
-//   const req = await api.user.login(loginRequest.username, loginRequest.password);
-//     // console.log("res:", res);
-//     // console.log("data:", res.data);
-//   }
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Login() {
-  // const router = useRouter(); // will be used to route the user to the dashboard
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
+  const router = useRouter();
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -28,7 +21,6 @@ export default function Login() {
       errors={errors}
       onClearErrors={setErrors}
       onSubmit={async (event) => {
-        // router.push('/test/moreroute'); // add to end of onSubmit, make sure u get a 200 from login endpoint, then redirect to dashboard
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
 
@@ -39,20 +31,23 @@ export default function Login() {
 
         setLoading(true);
         const res = await handleLogin(loginRequest);
-        console.log(res);
-        // const serverErrors = {
-        //   username: res.error,
-        //   password: res.error,
-        // }
+        if (!res.success) {
+          const serverErrors = {
+            username: res.error,
+            password: res.error,
+          };
+          setErrors(serverErrors);
+        } else {
+          router.push("/test/moreroute");
+        }
 
-        // setErrors(serverErrors);
         setLoading(false);
       }}
     >
       <div className={styles.login_info}>
         <Field.Root name="username" className={styles.login_input_wrapper}>
           <Field.Control
-            placeholder="username"
+            placeholder="username or email"
             className={styles.login_input}
           />
         </Field.Root>
@@ -62,16 +57,32 @@ export default function Login() {
             type="password"
             className={styles.login_input}
           />
+          <Field.Error className={styles.login_error} />
         </Field.Root>
       </div>
-      <button type="submit" className={styles.login_submit}>
+      <button type="submit" className={styles.login_submit} disabled={loading}>
         {!loading ? "login" : <FaDog className={styles.login_submit_loading} />}
       </button>
+      <p className={styles.login_register}>
+        don't have an account?{" "}
+        <Link className={styles.login_register_link} href="/register">
+          register here!
+        </Link>
+      </p>
     </Form>
   );
 }
 
 async function handleLogin(request: LoginRequest) {
-  const res = await api.user.login(request.username, request.password);
-  console.log(res);
+  const res = await api.auth.login(request.username, request.password);
+
+  if (res.ok && res.data.token) {
+    localStorage.setItem("token", res.data.token);
+    return { success: true };
+  } else {
+    return {
+      success: false,
+      error: res.error?.Message || "",
+    };
+  }
 }

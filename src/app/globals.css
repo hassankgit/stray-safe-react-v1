@@ -7,13 +7,8 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
-  } 
+  }
 }
-
-/* @font-face {
-  font-family: 'Nunito', sans-serif;
-  src: url("../../public/fonts/Nunito/Nunito-Italic-VariableFont_wght.ttf");
-} */
 
 html,
 body {
@@ -23,7 +18,7 @@ body {
 }
 
 body {
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   font-weight: 900;
   color: var(--foreground);
   background: var(--background);
