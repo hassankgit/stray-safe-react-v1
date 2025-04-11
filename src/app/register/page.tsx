@@ -9,7 +9,7 @@ export default function RegisterForm() {
     <div className={styles.app_wrapper}>
       <div className={styles.app_body}>
         <div className={styles.app_banner_top_wrapper}>
-          <h1>let's get you started</h1>
+          <h1>let&apos;s get you started</h1>
           {deployed ? (
             <Register />
           ) : (

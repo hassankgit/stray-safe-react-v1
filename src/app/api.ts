@@ -20,6 +20,7 @@ const fetchWithBearer: typeof fetch = async (input, init = {}) => {
     return response;
   } catch (error) {
     // TODO: Figure out the best way to show big errors like if the API is down
+    console.log(error);
     throw {
       error: "sorry, could not connect to straysafe. please try again later!",
       success: false,

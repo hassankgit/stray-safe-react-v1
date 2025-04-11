@@ -64,7 +64,7 @@ export default function Login() {
         {!loading ? "login" : <FaDog className={styles.login_submit_loading} />}
       </button>
       <p className={styles.login_register}>
-        don't have an account?{" "}
+        don&apos;t have an account?{" "}
         <Link className={styles.login_register_link} href="/register">
           register here!
         </Link>
