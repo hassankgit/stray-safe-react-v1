@@ -25,22 +25,16 @@
   }
   &_banner {
     &_top_wrapper {
-      // TODO: experiment with new design?
-      // padding-left: 40px;
-      // padding-right: 40px;
-      // padding-bottom: 16px;
-      // border-radius: 10px;
-      // padding-top: 16px;
-      // background-color: #d8232c;
-      // margin-top: 10rem;
-      // width: 30rem;
-      width: 13.5rem;
-      margin-top: 12.5rem;
+      padding: 2rem;
+      background-color: #981010; // make variable
+      border-radius: 1rem;
+      width: 20rem;
+      margin-top: 6rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      animation: fadeSlideDown 0.8s ease-out forwards;
+      animation: fadeSlideDown 0.6s ease-out forwards;
       z-index: 2;
 
       &_logo {
@@ -99,6 +93,25 @@
     100% {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+}
+
+@media (max-width: 1600px) {
+  .app_banner_top_wrapper {
+    margin-top: 2rem;
+    background-color: #981010;
+  }
+}
+
+@media (max-width: 600px) {
+  .app {
+    &_banner_top_wrapper {
+      margin-top: 1rem;
+      background-color: transparent;
+    }
+    &_banner_bottom_wrapper {
+      display: none;
     }
   }
 }

@@ -25,13 +25,15 @@
   }
   &_banner {
     &_top_wrapper {
-      margin-top: 12.5rem;
-      width: 13.25rem;
+      padding: 2rem;
+      border-radius: 1rem;
+      margin-top: 16rem;
+      width: 20rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      animation: fadeSlideDown 0.8s ease-out forwards;
+      animation: fadeSlideDown 0.6s ease-out forwards;
       z-index: 2;
 
       &_logo {
@@ -90,6 +92,25 @@
     100% {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+}
+
+@media (max-width: 1600px) {
+  .app_banner_top_wrapper {
+    margin-top: 4rem;
+    background-color: #981010;
+  }
+}
+
+@media (max-width: 600px) {
+  .app {
+    &_banner_top_wrapper {
+      margin-top: 4rem;
+      background-color: transparent;
+    }
+    &_banner_bottom_wrapper {
+      display: none;
     }
   }
 }
