@@ -1,5 +1,5 @@
 import { Api } from "../swagger/swagger";
-import { isProd } from "./util";
+import { isProd } from "./utils";
 
 const fetchWithBearer: typeof fetch = async (input, init = {}) => {
   const token = localStorage.getItem("token");

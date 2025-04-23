@@ -1,8 +1,7 @@
 "use client";
 import styles from "./page.module.scss";
 import Login from "../components/login/Login";
-
-const deployed = true;
+import { hideLogin } from "./utils";
 
 export default function Home() {
   return (
@@ -21,10 +20,10 @@ export default function Home() {
               className={styles.app_banner_top_text}
             />
           </div>
-          {deployed ? (
-            <Login />
-          ) : (
+          {hideLogin ? (
             <p style={{ margin: "20px", fontSize: "16px" }}> coming soon! </p>
+          ) : (
+            <Login />
           )}
         </div>
         <div className={styles.app_banner_bottom_wrapper}>
