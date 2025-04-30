@@ -1,29 +1,18 @@
 "use client";
+import { hideLogin } from "../utils";
 import styles from "./page.module.scss";
-import Login from "../components/login/Login";
-import { hideLogin } from "./utils";
+import Register from "@/components/register/Register";
 
-export default function Home() {
+export default function RegisterForm() {
   return (
     <div className={styles.app_wrapper}>
       <div className={styles.app_body}>
         <div className={styles.app_banner_top_wrapper}>
-          <div className={styles.app_banner_top_wrapper_logo}>
-            <img
-              src="/images/straysafelogo.png"
-              alt="straysafe logo"
-              className={styles.app_banner_top_logo}
-            />
-            <img
-              src="/images/straysafetext.png"
-              alt="stray safe text"
-              className={styles.app_banner_top_text}
-            />
-          </div>
+          <h1>let&apos;s get you started</h1>
           {hideLogin ? (
             <p style={{ margin: "20px", fontSize: "16px" }}> coming soon! </p>
           ) : (
-            <Login />
+            <Register />
           )}
         </div>
         <div className={styles.app_banner_bottom_wrapper}>
