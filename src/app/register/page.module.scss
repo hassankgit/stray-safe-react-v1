@@ -1,4 +1,4 @@
-@use "../styles/variables" as *;
+@use "../../styles/_variables.sass" as *;
 
 .app {
   &_wrapper {
@@ -27,8 +27,8 @@
     &_top_wrapper {
       padding: 2rem;
       border-radius: 1rem;
-      margin-top: 16rem;
       width: 20rem;
+      margin-top: 6rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -98,7 +98,7 @@
 
 @media (max-width: 1600px) {
   .app_banner_top_wrapper {
-    margin-top: 4rem;
+    margin-top: 2rem;
     background-color: #981010;
   }
 }
@@ -106,7 +106,7 @@
 @media (max-width: 600px) {
   .app {
     &_banner_top_wrapper {
-      margin-top: 4rem;
+      margin-top: 1rem;
       background-color: transparent;
     }
     &_banner_bottom_wrapper {

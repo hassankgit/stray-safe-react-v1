@@ -1,0 +1,32 @@
+@use "../../../styles/_variables.sass" as *;
+
+.sidebar {
+  &.collapsed {
+    width: 60px;
+  }
+
+  &.open {
+    width: 200px;
+  }
+
+  transition: width 0.3s ease;
+  overflow: hidden;
+  height: 100%;
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+  padding-top: 12px;
+  padding-left: 16px;
+  padding-right: 16px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
+  clip-path: inset(0 -15px 0 0);
+
+  &_items {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+}

@@ -1,0 +1,17 @@
+@use "../../styles/_variables.sass" as *;
+
+.header_sidebar_body_wrapper {
+  height: 100vh;
+}
+
+.page_body {
+  width: 100vw;
+  height: 100vh;
+}
+
+.sidebar_body_wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
