@@ -38,7 +38,7 @@ export default function Login() {
           };
           setErrors(serverErrors);
         } else {
-          router.push("/test/moreroute");
+          router.push("/home");
         }
 
         setLoading(false);

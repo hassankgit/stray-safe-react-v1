@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
   // notes:
   //    can do nested routes '/test/moreroute' to specifically block one
   //    or '/test' to block everything starting with test
-  const protectedPaths = ["/test", "/admin", "/profile"];
+  const protectedPaths = ["/test", "/admin", "/profile", "/home"];
   const publicPaths = ["/", "/register"];
 
   const pathName = request.nextUrl.pathname;
@@ -24,7 +24,7 @@ export function middleware(request: NextRequest) {
 
   // redirect away from public routes if a token is found
   if (isPublicRoute && token) {
-    return NextResponse.redirect(new URL("/test/moreroute", request.url));
+    return NextResponse.redirect(new URL("/home", request.url));
   }
 
   return NextResponse.next();

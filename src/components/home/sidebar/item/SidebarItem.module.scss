@@ -1,0 +1,30 @@
+@use "../../../../styles/_variables.sass" as *;
+
+.sidebar {
+  &_item {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+
+    &_icon {
+      flex-shrink: 0;
+      color: $primary;
+      width: 24px;
+      height: 24px;
+    }
+
+    &_label {
+      flex-shrink: 0;
+      font-size: 16px;
+      color: $primary;
+    }
+  }
+}
+
+.visible {
+  opacity: 1;
+}
+
+.hidden {
+  opacity: 0;
+}
