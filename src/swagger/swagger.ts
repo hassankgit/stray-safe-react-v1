@@ -15,6 +15,19 @@ export interface LoginRequest {
   password?: string | null;
 }
 
+export interface RegisterRequest {
+  /** @minLength 1 */
+  username: string;
+  /** @minLength 1 */
+  email: string;
+  /** @minLength 1 */
+  password: string;
+}
+
+export interface TokenResponse {
+  token?: string | null;
+}
+
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 
@@ -219,7 +232,6 @@ export class HttpClient<SecurityDataType = unknown> {
         this.abortControllers.delete(cancelToken);
       }
 
-      if (!response.ok) throw data;
       return data;
     });
   };
@@ -248,57 +260,38 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
-  submit = {
+  auth = {
     /**
      * No description
      *
-     * @tags Home
-     * @name SubmitCreate
-     * @request POST:/Submit
+     * @tags Auth
+     * @name LoginCreate
+     * @request POST:/Auth/Login
      */
-    submitCreate: (
-      data: {
-        /** @format binary */
-        Image: File;
-      },
-      query?: {
-        /** @format int32 */
-        Id?: number;
-        /** @format double */
-        Latitude?: number;
-        /** @format double */
-        Longitude?: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<void, any>({
-        path: `/Submit`,
+    loginCreate: (data: LoginRequest, params: RequestParams = {}) =>
+      this.request<TokenResponse, any>({
+        path: `/Auth/Login`,
         method: "POST",
-        query: query,
         body: data,
-        type: ContentType.FormData,
+        type: ContentType.Json,
+        format: "json",
         ...params,
       }),
-  };
-  login = {
+
     /**
      * No description
      *
-     * @tags Home
-     * @name LoginCreate
-     * @request POST:/Login
+     * @tags Auth
+     * @name RegisterCreate
+     * @request POST:/Auth/Register
      */
-    loginCreate: (
-      query?: {
-        Username?: string;
-        Password?: string;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<void, any>({
-        path: `/Login`,
+    registerCreate: (data: RegisterRequest, params: RequestParams = {}) =>
+      this.request<TokenResponse, any>({
+        path: `/Auth/Register`,
         method: "POST",
-        query: query,
+        body: data,
+        type: ContentType.Json,
+        format: "json",
         ...params,
       }),
   };
@@ -307,15 +300,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags User
-     * @name LoginCreate
-     * @request POST:/User/Login
+     * @name MyNameList
+     * @request GET:/User/MyName
      */
-    loginCreate: (data: LoginRequest, params: RequestParams = {}) =>
+    myNameList: (params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/User/Login`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
+        path: `/User/MyName`,
+        method: "GET",
         ...params,
       }),
   };

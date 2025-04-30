@@ -2,19 +2,17 @@
 
 import type { Metadata } from "next";
 import "./globals.css";
-import { Nunito } from 'next/font/google'
- 
+import { Nunito } from "next/font/google";
+
 const nunito = Nunito({
-  subsets: ['latin'],
-  weight: "700"
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
   title: "straysafe",
   description: "straysafe: in progress! :D",
-  icons: [
-    { url: 'images/straysafelogosquare.png'},
-  ]
+  icons: [{ url: "images/straysafelogosquare.png" }],
 };
 
 export default function RootLayout({
@@ -24,9 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="Root">
-        {children}
-      </body>
+      <body className="Root">{children}</body>
     </html>
   );
 }
