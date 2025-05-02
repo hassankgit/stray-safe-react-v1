@@ -6,6 +6,7 @@ import Header from "@/components/home/header/Header";
 import Sidebar from "@/components/home/sidebar/Sidebar";
 import styles from "./layout.module.scss";
 import { useState } from "react";
+import { useRedirectIfUnauthenticated } from "../hooks/useRedirectIfUnauthenticated";
 
 export default function HomeLayout({
   children,
@@ -13,6 +14,9 @@ export default function HomeLayout({
   children: React.ReactNode;
 }>) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const authorized = useRedirectIfUnauthenticated();
+  if (!authorized) return null;
 
   return (
     <div className={styles.header_sidebar_body_wrapper}>
