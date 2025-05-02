@@ -1,7 +1,7 @@
 "use client";
 import styles from "./page.module.scss";
 import Login from "../components/login/Login";
-import { hideLogin } from "./utils";
+import { hideLogin } from "./utils/utils";
 
 export default function Home() {
   return (

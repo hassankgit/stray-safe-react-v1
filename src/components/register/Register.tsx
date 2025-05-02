@@ -9,6 +9,7 @@ import { FaDog } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { z } from "zod";
+import { useRedirectIfAuthenticated } from "../../app/hooks/useRedirectIfAuthenticated";
 
 // TODO: separate schema into different file
 export const registerSchema = z
@@ -39,6 +40,8 @@ export const registerSchema = z
   });
 
 export default function RegisterForm() {
+  useRedirectIfAuthenticated();
+
   const router = useRouter();
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -84,7 +87,7 @@ export default function RegisterForm() {
           };
           setErrors(serverErrors);
         } else {
-          router.push("/test/moreroute");
+          router.push("/home");
         }
 
         setLoading(false);

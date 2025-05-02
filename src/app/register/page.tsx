@@ -1,5 +1,5 @@
 "use client";
-import { hideLogin } from "../utils";
+import { hideLogin } from "../utils/utils";
 import styles from "./page.module.scss";
 import Register from "@/components/register/Register";
 

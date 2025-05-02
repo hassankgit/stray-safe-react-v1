@@ -9,8 +9,11 @@ import { Form } from "@base-ui-components/react";
 import { FaDog } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRedirectIfAuthenticated } from "../../app/hooks/useRedirectIfAuthenticated";
 
 export default function Login() {
+  useRedirectIfAuthenticated();
+
   const router = useRouter();
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -78,7 +81,9 @@ async function handleLogin(request: LoginRequest) {
 
   if (res.ok && res.data.token) {
     localStorage.setItem("token", res.data.token);
-    return { success: true };
+    return {
+      success: true,
+    };
   } else {
     return {
       success: false,
