@@ -1,5 +1,5 @@
 "use client";
-
+import { mapStyle } from "./mapStyle";
 import styles from "./page.module.scss";
 import {
   GoogleMap,
@@ -54,6 +54,10 @@ export default function HomePage() {
     <div className={styles.map_container}>
       {isLoaded && (
         <GoogleMap
+          options={{
+            styles: mapStyle,
+            disableDefaultUI: true,
+          }}
           mapContainerStyle={containerStyle}
           center={centerPos}
           zoom={17}
@@ -63,6 +67,10 @@ export default function HomePage() {
             <MarkerF
               position={centerPos}
               onMouseOver={handleMouseEnter}
+              icon={{
+                url: "/images/straysafelogosquare.png",
+                scaledSize: new window.google.maps.Size(40, 40),
+              }}
               // onClick={() => setOpenDetail(true)} // uncomment when opening sighting detail window
             />
             {hovered && (
@@ -70,7 +78,7 @@ export default function HomePage() {
                 position={centerPos}
                 zIndex={1}
                 options={{
-                  pixelOffset: new window.google.maps.Size(0, -40),
+                  pixelOffset: new window.google.maps.Size(0, -50),
                   disableAutoPan: true,
                 }}
                 onCloseClick={() => setHovered(false)}
