@@ -7,6 +7,7 @@ import Sidebar from "@/components/home/sidebar/Sidebar";
 import styles from "./layout.module.scss";
 import { useState } from "react";
 import { useRedirectIfUnauthenticated } from "../hooks/useRedirectIfUnauthenticated";
+import SightingDetail from "@/components/home/sighting_details/SightingDetail";
 
 export default function HomeLayout({
   children,
@@ -24,6 +25,7 @@ export default function HomeLayout({
       <div className={styles.sidebar_body_wrapper}>
         <Sidebar isOpen={isSidebarOpen} />
         <div className={styles.page_body}>{children}</div>
+        <SightingDetail className={styles.sighting_details} />
       </div>
     </div>
   );

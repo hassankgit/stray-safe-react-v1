@@ -1,0 +1,17 @@
+@use "../../../styles/_variables.sass" as *;
+
+.text_area {
+  color: black;
+  width: 100%;
+  height: max-content;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border: 1px solid $inputBorder;
+  border-radius: 8px;
+  color: $input;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 12px;
+}

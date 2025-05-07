@@ -1,0 +1,33 @@
+@use "../../styles/_variables.sass" as *;
+
+.tag_wrapper {
+  width: max-content;
+  height: max-content;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px;
+  border-radius: 16px;
+
+  p {
+    line-height: 16px;
+    font-size: 12px;
+    color: black;
+  }
+}
+
+.green {
+  background-color: $greenTagBackground;
+}
+
+.yellow {
+  background-color: $yellowTagBackground;
+}
+
+.pink {
+  background-color: $pinkTagBackground;
+}
+
+.none {
+  background-color: transparent;
+}
