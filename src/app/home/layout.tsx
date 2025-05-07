@@ -25,6 +25,7 @@ export default function HomeLayout({
       <div className={styles.sidebar_body_wrapper}>
         <Sidebar isOpen={isSidebarOpen} />
         <div className={styles.page_body}>{children}</div>
+        {/* TODO: Conditionally hide this */}
         <SightingDetail className={styles.sighting_details} />
       </div>
     </div>
