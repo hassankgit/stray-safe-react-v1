@@ -14,4 +14,19 @@
   font-weight: 600;
   font-size: 12px;
   line-height: 12px;
+
+  &_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    height: max-content;
+  }
+
+  &_sublabel {
+    font-size: 12px;
+    line-height: 12px;
+    color: $input;
+    font-weight: 600;
+  }
 }

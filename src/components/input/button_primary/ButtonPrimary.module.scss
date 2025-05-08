@@ -1,0 +1,35 @@
+@use "../../../styles/_variables.sass" as *;
+
+.primary {
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  height: max-content;
+  align-items: center;
+  justify-content: center;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
+  background-color: $coral;
+  border: none;
+  border-radius: 8px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $lightCoral;
+  }
+
+  &:active,
+  &:disabled {
+    background-color: #cf4249;
+  }
+
+  &_label {
+    font-family: "Nunito";
+    font-size: 20px;
+    line-height: 13px;
+    font-weight: 600;
+    color: $white;
+  }
+}
