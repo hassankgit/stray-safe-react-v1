@@ -93,3 +93,18 @@
   flex-direction: column;
   gap: 8px;
 }
+
+.close_button {
+  width: 24px;
+  height: 24px;
+  color: $primary;
+  background-color: white;
+  border-radius: 8px;
+  position: absolute;
+  margin: 16px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $inputBorder;
+  }
+}

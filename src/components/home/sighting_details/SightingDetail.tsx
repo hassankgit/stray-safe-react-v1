@@ -6,9 +6,11 @@ import Tag from "@/components/tag/Tag";
 import InformationItem from "@/components/information/item/InformationItem";
 import TextArea from "@/components/input/custom_input/TextArea";
 import ButtonPrimary from "@/components/input/button_primary/ButtonPrimary";
+import { IoClose } from "react-icons/io5";
 
 type SightingDetailProps = {
   className: string;
+  onCloseClick: () => void;
 };
 
 const sightingDetails = {
@@ -38,6 +40,7 @@ export default function SightingDetail(props: SightingDetailProps) {
   return (
     <div className={props.className}>
       <div className={styles.sighting_detail}>
+        <IoClose className={styles.close_button} onClick={props.onCloseClick} />
         <img className={styles.image} src="images/mano.jpg" />
         <div className={styles.information}>
           <div className={styles.heading}>
