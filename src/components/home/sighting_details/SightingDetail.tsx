@@ -13,6 +13,7 @@ type SightingDetailProps = {
   onCloseClick: () => void;
 };
 
+// TODO: Replace with API Call
 const sightingDetails = {
   name: "Mano",
   species: "cat",
@@ -41,7 +42,9 @@ export default function SightingDetail(props: SightingDetailProps) {
     <div className={props.className}>
       <div className={styles.sighting_detail}>
         <IoClose className={styles.close_button} onClick={props.onCloseClick} />
-        <img className={styles.image} src="images/mano.jpg" />
+        <div className={styles.image_wrapper}>
+          <img className={styles.image} src="images/test_cats/mano.jpg" />
+        </div>
         <div className={styles.information}>
           <div className={styles.heading}>
             <div className={styles.title}>

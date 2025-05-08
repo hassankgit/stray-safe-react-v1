@@ -11,6 +11,14 @@
 .image {
   width: 100%;
   height: auto;
+
+  &_wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-height: 350px;
+    overflow-y: hidden;
+  }
 }
 
 .information {

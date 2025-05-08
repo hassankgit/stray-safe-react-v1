@@ -11,6 +11,22 @@ import { useState } from "react";
 import Heading4 from "@/components/headings/heading4/Heading4";
 import Heading1 from "@/components/headings/heading1/Heading1";
 import SightingDetail from "@/components/home/sighting_details/SightingDetail";
+import MarkerWithInfoWindow from "@/components/map/marker_with_info_window/MarkerWithInfoWindow";
+
+export type SightingPreviewPlaceholder = {
+  name: string;
+  species: string;
+  breed: string;
+  imageSource: string;
+  lastSpotted: string;
+  coordinates: Coordinates;
+  id: number;
+};
+
+export type Coordinates = {
+  lat: number;
+  lng: number;
+};
 
 export default function HomePage() {
   const containerStyle = {
@@ -28,40 +44,41 @@ export default function HomePage() {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
   });
 
-  const [hovered, setHovered] = useState(true);
-
   // for opening the sighting detail window
+
+  // TODO:
+  // - make api call here to get SightingPreview objects
   const [openDetail, setOpenDetail] = useState(false);
 
-  const handleMouseEnter = () => {
-    setTimeout(() => {
-      setHovered(true);
-    }, 200);
-    // setHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setTimeout(() => {
-      setHovered(false);
-    }, 200);
-    // setHovered(true);
-  };
-
-  const sightingPreview = {
-    name: "Mano",
-    species: "cat",
-    breed: "tabby",
-    lastSpotted: "spotted 3 hours ago",
-  };
+  const sightingPreviewPlaceholder: SightingPreviewPlaceholder[] = [
+    {
+      name: "Mano",
+      species: "cat",
+      breed: "tabby",
+      imageSource: "images/test_cats/mano.jpg",
+      lastSpotted: "spotted 3 hours ago",
+      coordinates: {
+        lat: 35.962611,
+        lng: -90.194861,
+      },
+      id: 1,
+    },
+    {
+      name: "Name unknown",
+      species: "cat",
+      breed: "breed unknown",
+      imageSource: "images/test_cats/straycat1.jpg",
+      lastSpotted: "spotted 5 hours ago",
+      coordinates: {
+        lat: 35.99,
+        lng: -90.3,
+      },
+      id: 2,
+    },
+  ];
 
   return (
     <div className={styles.sighting_details_map_wrapper}>
-      {openDetail && (
-        <SightingDetail
-          onCloseClick={() => setOpenDetail(false)}
-          className={styles.sighting_details}
-        />
-      )}
       <div className={styles.map_container}>
         {isLoaded && (
           <GoogleMap
@@ -73,50 +90,20 @@ export default function HomePage() {
             center={centerPos}
             zoom={17}
           >
-            <div onMouseLeave={handleMouseLeave}>
-              {/* TODO : create markerf + infowindowf component, markerwithinfowindow */}
-              <MarkerF
-                position={centerPos}
-                onMouseOver={handleMouseEnter}
-                icon={{
-                  url: "/images/straysafelogosquare.png",
-                  scaledSize: new window.google.maps.Size(40, 40),
-                }}
-                onClick={() => setOpenDetail(true)}
+            {sightingPreviewPlaceholder.map((preview, index) => (
+              <MarkerWithInfoWindow
+                key={index}
+                previewDetails={preview}
+                setOpenDetail={() => setOpenDetail(true)}
               />
-              {hovered && (
-                <InfoWindowF
-                  position={centerPos}
-                  zIndex={1}
-                  options={{
-                    pixelOffset: new window.google.maps.Size(0, -50),
-                    disableAutoPan: true,
-                  }}
-                  onCloseClick={() => setHovered(false)}
-                >
-                  <div className={styles.sighting_on_hover}>
-                    <div className={styles.sighting_preview}>
-                      <div className={styles.sighting_image_wrapper}>
-                        <img
-                          alt="cat test"
-                          className={styles.sighting_image}
-                          src="images/mano.jpg"
-                        />
-                      </div>
-                      <div className={styles.sighting_preview_description}>
-                        <Heading1
-                          text={`${sightingPreview.name} - ${sightingPreview.species} - ${sightingPreview.breed}`}
-                        />
-                        <Heading4 text={sightingPreview.lastSpotted} />
-                      </div>
-                    </div>
-                  </div>
-                </InfoWindowF>
-              )}
-            </div>
+            ))}
           </GoogleMap>
         )}
       </div>
+      <SightingDetail
+        onCloseClick={() => setOpenDetail(false)}
+        className={`${styles.sighting_details} ${openDetail && styles.open}`}
+      />
     </div>
   );
 }
