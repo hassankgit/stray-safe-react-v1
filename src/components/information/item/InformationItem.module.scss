@@ -1,0 +1,10 @@
+@use "../../../styles/_variables.sass" as *;
+
+.information_item {
+  width: max-content;
+  height: max-content;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+}

@@ -1,4 +1,9 @@
-import { Api } from "../swagger/swagger";
+import {
+  Api,
+  Coordinates,
+  LoginRequest,
+  RegisterRequest,
+} from "../swagger/swagger";
 import { isProd } from "./utils/utils";
 
 const fetchWithBearer: typeof fetch = async (input, init = {}) => {
@@ -46,15 +51,18 @@ export const apiInstance = new Api({
 // }
 export const api = {
   auth: {
-    login: (username?: string | null, password?: string | null) =>
-      apiInstance.auth.loginCreate({ username, password }, { format: "json" }),
-    register: (username: string, password: string, email: string) =>
-      apiInstance.auth.registerCreate(
-        { username, email, password },
-        { format: "json" }
-      ),
+    login: (request: LoginRequest) =>
+      apiInstance.auth.loginCreate(request, { format: "json" }),
+    register: (request: RegisterRequest) =>
+      apiInstance.auth.registerCreate(request, { format: "json" }),
   },
   admin: {
-    allUsers: () => apiInstance.admin.allUsersList({ format: "json" }),
+    allUsers: () => apiInstance.admin.usersAllList({ format: "json" }),
+  },
+  sighting: {
+    previews: (request: Coordinates) =>
+      apiInstance.sighting.previewsCreate(request, { format: "json" }),
+    detailById: (request: number) =>
+      apiInstance.sighting.detailDetail(request, { format: "json" }),
   },
 };
