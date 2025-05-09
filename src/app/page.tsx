@@ -28,6 +28,7 @@ export default function Home() {
         </div>
         <div className={styles.app_banner_bottom_wrapper}>
           <img
+            alt="bottom login banner"
             src="/images/loginbannerwidebottomhalf.png"
             className={styles.app_banner_bottom}
           />

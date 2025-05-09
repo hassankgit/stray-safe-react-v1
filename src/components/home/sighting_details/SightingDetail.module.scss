@@ -1,0 +1,118 @@
+@use "../../../styles/_variables.sass" as *;
+
+.sighting_detail {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+
+  &_wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-height: 350px;
+    overflow-y: hidden;
+  }
+}
+
+.information {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
+  gap: 24px;
+}
+
+.heading {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  width: max-content;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+
+  // TODO move to Heading1 component
+  h1 {
+    font-size: 24px;
+    line-height: 24px;
+    font-weight: 900;
+    color: $primary;
+  }
+}
+
+.location_wrapper {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.location_icon {
+  height: auto;
+  width: 14px;
+  color: $subheading;
+}
+
+.tag_section {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tag_wrapper {
+  width: max-content;
+  height: max-content;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.information_table {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.information_wrapper {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.close_button {
+  width: 24px;
+  height: 24px;
+  color: $primary;
+  background-color: white;
+  border-radius: 8px;
+  position: absolute;
+  margin: 16px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $inputBorder;
+  }
+}

@@ -1,0 +1,8 @@
+@use "../../../styles/_variables.sass" as *;
+
+.default {
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: 700;
+  color: $subheading;
+}

@@ -12,7 +12,7 @@ export function useRedirectIfUnauthenticated(
     const token = localStorage.getItem("token");
 
     if (!token && redirectIfUnauthenticated) {
-      router.push("/"); // redirect to login
+      router.push("/");
     } else if (token) {
       setAuthorized(true);
     }
