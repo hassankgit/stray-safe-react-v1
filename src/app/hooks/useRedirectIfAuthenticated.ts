@@ -9,7 +9,7 @@ export function useRedirectIfAuthenticated(redirectTo: string = "/home") {
     const token = localStorage.getItem("token");
 
     if (token) {
-      router.push(redirectTo); // redirect to home or another private route
+      router.push(redirectTo);
     }
   }, []);
 }
