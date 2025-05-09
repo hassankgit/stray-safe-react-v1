@@ -75,9 +75,9 @@ npm run dev
 npm run dev
 ```
 
-- the frontend should be running at <span style="font-weight:bold;">http://localhost:3000</span>
+- the frontend should be running at <span style="font-weight:bold;">http://localhost:3000</span>. keep in mind that in order to do any API calls, you will need a local instance of straysafe API hosted at https://localhost:7230 as well.
 
-### for production:
+### for local production instance:
 
 - build the project and run the production instance:
 
@@ -86,14 +86,16 @@ npm run build
 npm run start
 ```
 
-- locally this will also be available at http://localhost:3000.
+<p><span style="font-weight:bold;">warning</span>: locally this will also be available at http://localhost:3000, <span style="font-weight:bold;">but it will be pointing to the production API </span>(which uses prod data!).</p>
+
+to stop either local development or local production instance, do `Ctrl + C` in the Terminal.
 
 ## tech stack
 
 - React.js
 - Next.js
 - TypeScript
-- Vercel for deployment
+- Vercel (for production deployment)
 
 ## project structure
 
