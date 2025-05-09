@@ -18,9 +18,6 @@ export default function HomeLayout({
   const authorized = useRedirectIfUnauthenticated();
   if (!authorized) return null;
 
-  const authorized = useRedirectIfUnauthenticated();
-  if (!authorized) return null;
-
   return (
     <div className={styles.header_sidebar_body_wrapper}>
       <Header
