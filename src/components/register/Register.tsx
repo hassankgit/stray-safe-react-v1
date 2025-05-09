@@ -150,11 +150,7 @@ export default function RegisterForm() {
 }
 
 async function handleRegister(request: RegisterRequest) {
-  const res = await api.auth.register(
-    request.username,
-    request.password,
-    request.email
-  );
+  const res = await api.auth.register(request);
 
   if (res.ok && res.data.token) {
     localStorage.setItem("token", res.data.token);
