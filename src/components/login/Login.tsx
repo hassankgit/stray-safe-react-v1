@@ -1,4 +1,3 @@
-// TODO: add types to the endpoints
 "use client";
 import styles from "./Login.module.scss";
 import { Field } from "@base-ui-components/react/field";
@@ -77,7 +76,7 @@ export default function Login() {
 }
 
 async function handleLogin(request: LoginRequest) {
-  const res = await api.auth.login(request.username, request.password);
+  const res = await api.auth.login(request);
 
   if (res.ok && res.data.token) {
     localStorage.setItem("token", res.data.token);

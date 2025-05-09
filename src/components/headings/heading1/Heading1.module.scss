@@ -1,0 +1,8 @@
+@use "../../../styles/_variables.sass" as *;
+
+.default {
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: 900;
+  color: $primary;
+}
