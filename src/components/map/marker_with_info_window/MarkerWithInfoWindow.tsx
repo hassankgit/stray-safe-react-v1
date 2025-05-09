@@ -47,7 +47,6 @@ export default function MarkerWithInfoWindow(props: MarkerWithInfoWindowProps) {
             props.previewDetails.sightingDetailId ?? -1
           );
         }}
-        // onClick, send ID to backend GET Sighting/Detail/{id}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
       />

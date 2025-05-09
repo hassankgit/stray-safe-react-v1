@@ -34,6 +34,7 @@ export default function SightingDetailPanel(props: SightingDetailProps) {
         <div className={styles.image_wrapper}>
           {props.sightingDetails?.imageUrl && (
             <img
+              alt="animal image"
               className={styles.image}
               src={props.sightingDetails?.imageUrl}
             />

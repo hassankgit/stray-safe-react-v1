@@ -1,12 +1,7 @@
 "use client";
 import { mapStyle } from "./mapStyle";
 import styles from "./page.module.scss";
-import {
-  GoogleMap,
-  InfoWindowF,
-  MarkerF,
-  useJsApiLoader,
-} from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { useEffect, useRef, useState } from "react";
 import MarkerWithInfoWindow from "@/components/map/marker_with_info_window/MarkerWithInfoWindow";
 import { api } from "../api";
@@ -17,7 +12,6 @@ import {
 } from "@/swagger/swagger";
 import SightingDetailPanel from "@/components/home/sighting_details/SightingDetail";
 
-// testing api
 export default function HomePage() {
   const containerStyle = {
     width: "100%",
@@ -41,7 +35,6 @@ export default function HomePage() {
     const res = await api.sighting.detailById(id);
     if (res.ok) {
       setDetailsPanelContent(res.data);
-      console.log(`from sighting/detail/${id}`, res.data);
     } else {
       setDetailsPanelContent(undefined);
     }
@@ -94,7 +87,6 @@ export default function HomePage() {
       <div className={styles.map_container}>
         {isLoaded && (
           <GoogleMap
-            // new for testing api calls
             onLoad={(map: google.maps.Map) => {
               mapRef.current = map;
               map.setCenter({

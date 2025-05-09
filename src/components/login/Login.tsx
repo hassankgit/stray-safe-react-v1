@@ -1,4 +1,3 @@
-// TODO: add types to the endpoints
 "use client";
 import styles from "./Login.module.scss";
 import { Field } from "@base-ui-components/react/field";

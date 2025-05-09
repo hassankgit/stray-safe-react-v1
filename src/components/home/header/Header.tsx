@@ -5,7 +5,7 @@ import Heading1 from "@/components/headings/heading1/Heading1";
 import Heading4 from "@/components/headings/heading4/Heading4";
 
 type HeaderProps = {
-  toggleSidebar: () => void;
+  toggleSidebar?: () => void;
 };
 
 export default function Header({ toggleSidebar }: HeaderProps) {
