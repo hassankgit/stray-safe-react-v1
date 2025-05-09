@@ -62,5 +62,7 @@ export const api = {
   sighting: {
     previews: (request: Coordinates) =>
       apiInstance.sighting.previewsCreate(request, { format: "json" }),
+    detailById: (request: number) =>
+      apiInstance.sighting.detailDetail(request, { format: "json" }),
   },
 };

@@ -8,10 +8,14 @@ import {
   useJsApiLoader,
 } from "@react-google-maps/api";
 import { useEffect, useRef, useState } from "react";
-import SightingDetail from "@/components/home/sighting_details/SightingDetail";
 import MarkerWithInfoWindow from "@/components/map/marker_with_info_window/MarkerWithInfoWindow";
 import { api } from "../api";
-import { Coordinates, SightingPreview } from "@/swagger/swagger";
+import {
+  Coordinates,
+  SightingDetail,
+  SightingPreview,
+} from "@/swagger/swagger";
+import SightingDetailPanel from "@/components/home/sighting_details/SightingDetail";
 
 // testing api
 export default function HomePage() {
@@ -25,14 +29,23 @@ export default function HomePage() {
     longitude: -75.19256400832441,
   };
 
-  // TODO:
-  // - make api call here to get SightingPreview objects
-
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
   const mapRef = useRef<google.maps.Map | null>(null);
 
+  const [detailsPanelContent, setDetailsPanelContent] =
+    useState<SightingDetail>();
   const [openDetail, setOpenDetail] = useState(false);
   const [sightings, setSightings] = useState<SightingPreview[]>([]);
+
+  const handleGetDetailsPanelContent = async (id: number) => {
+    const res = await api.sighting.detailById(id);
+    if (res.ok) {
+      setDetailsPanelContent(res.data);
+      console.log(`from sighting/detail/${id}`, res.data);
+    } else {
+      setDetailsPanelContent(undefined);
+    }
+  };
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -98,17 +111,23 @@ export default function HomePage() {
             mapContainerStyle={containerStyle}
             zoom={17}
           >
-            {sightings.map((preview, index) => (
-              <MarkerWithInfoWindow
-                key={index}
-                previewDetails={preview}
-                setOpenDetail={() => setOpenDetail(true)}
-              />
-            ))}
+            {sightings.map(
+              (preview, index) =>
+                preview.coordinates.latitude &&
+                preview.coordinates.longitude && (
+                  <MarkerWithInfoWindow
+                    handleGetDetailsPanelContent={handleGetDetailsPanelContent}
+                    key={index}
+                    previewDetails={preview}
+                    setOpenDetail={() => setOpenDetail(true)}
+                  />
+                )
+            )}
           </GoogleMap>
         )}
       </div>
-      <SightingDetail
+      <SightingDetailPanel
+        sightingDetails={detailsPanelContent}
         onCloseClick={() => setOpenDetail(false)}
         className={`${styles.sighting_details} ${openDetail && styles.open}`}
       />

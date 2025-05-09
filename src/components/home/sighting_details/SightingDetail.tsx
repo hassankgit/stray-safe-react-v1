@@ -7,25 +7,13 @@ import InformationItem from "@/components/information/item/InformationItem";
 import TextArea from "@/components/input/custom_input/TextArea";
 import ButtonPrimary from "@/components/input/button_primary/ButtonPrimary";
 import { IoClose } from "react-icons/io5";
+import { SightingDetail } from "@/swagger/swagger";
+import { getSpottedTimeAgo } from "@/app/utils/getSpottedTimeAgo";
 
 type SightingDetailProps = {
   className: string;
   onCloseClick: () => void;
-};
-
-// TODO: Replace with API Call
-const sightingDetails = {
-  name: "Mano",
-  species: "cat",
-  breed: "tabby",
-  age: "6-12 months",
-  sex: "female",
-  whenSpotted: "spotted april 16, 5:55 pm",
-  location: "100 E Penn Square, Philadelphia, PA, 19104",
-  tags: ["still roaming", "friendly", "healthy"],
-  notes:
-    "friendly neighborhood cat mano that runs up and down the block this manos block be sure to feedher when u run by ykwis ong magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamcolaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velitesse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpaqui officia deserunt mollit anim id est laborum.",
-  sightedBy: "straysafeuser1",
+  sightingDetails?: SightingDetail;
 };
 
 // TODO move elsewhere
@@ -35,37 +23,54 @@ const tagColors: { [key: string]: string } = {
   healthy: "green",
   female: "pink",
   male: "blue",
+  default: "gray",
 };
 
-export default function SightingDetail(props: SightingDetailProps) {
+export default function SightingDetailPanel(props: SightingDetailProps) {
   return (
     <div className={props.className}>
       <div className={styles.sighting_detail}>
         <IoClose className={styles.close_button} onClick={props.onCloseClick} />
         <div className={styles.image_wrapper}>
-          <img className={styles.image} src="images/test_cats/mano.jpg" />
+          {props.sightingDetails?.imageUrl && (
+            <img
+              className={styles.image}
+              src={props.sightingDetails?.imageUrl}
+            />
+          )}
         </div>
         <div className={styles.information}>
           <div className={styles.heading}>
             <div className={styles.title}>
-              <Heading1 text={sightingDetails.name} />
+              <Heading1 text={props.sightingDetails?.name ?? "Unknown name"} />
               <Heading1
-                text={`${sightingDetails.species} - ${sightingDetails.breed}`}
+                text={`${
+                  props.sightingDetails?.species ?? "Unknown species"
+                } - ${props.sightingDetails?.breed ?? "Unknown breed"}`}
               />
             </div>
-            <Heading4 text={sightingDetails.whenSpotted} />
+            <Heading4
+              text={
+                props.sightingDetails?.lastSpotted
+                  ? getSpottedTimeAgo(props.sightingDetails?.lastSpotted)
+                  : "spotted an unknown time ago"
+              }
+            />
             <div className={styles.location_wrapper}>
               <FaMapMarkerAlt className={styles.location_icon} />
-              <Heading4 text={sightingDetails.location} />
+              <Heading4
+                text={props.sightingDetails?.location ?? "Unknown location"}
+              />
             </div>
           </div>
           <div className={styles.tag_section}>
             <Heading4 text={"this animal is..."} />
 
             <div className={styles.tag_wrapper}>
-              {sightingDetails.tags.map((text, index) => (
-                <Tag key={index} text={text} color={tagColors[text]} />
-              ))}
+              {props.sightingDetails?.tagsArray &&
+                props.sightingDetails?.tagsArray.map((text, index) => (
+                  <Tag key={index} text={text} color={tagColors[text]} />
+                ))}
             </div>
           </div>
           <div className={styles.information_table}>
@@ -73,23 +78,35 @@ export default function SightingDetail(props: SightingDetailProps) {
             <div className={styles.information_wrapper}>
               <InformationItem
                 label="species"
-                tagLabel={sightingDetails.species}
+                tagLabel={props.sightingDetails?.species ?? "unknown species"}
               />
-              <InformationItem label="breed" tagLabel={sightingDetails.breed} />
-              <InformationItem label="age" tagLabel={sightingDetails.age} />
+              <InformationItem
+                label="breed"
+                tagLabel={props.sightingDetails?.breed ?? "unknown"}
+              />
+              <InformationItem
+                label="age"
+                tagLabel={props.sightingDetails?.ageLabel ?? "unknown"}
+              />
               <InformationItem
                 label="sex"
-                tagLabel={sightingDetails.sex}
-                tagColor={tagColors[sightingDetails.sex]}
+                tagLabel={props.sightingDetails?.sexLabel ?? "unknown"}
+                tagColor={tagColors[props.sightingDetails?.sexLabel ?? "gray"]}
               />
             </div>
           </div>
           <TextArea
-            label={`notes from ${sightingDetails.sightedBy}: `}
+            label={`notes from ${
+              props.sightingDetails?.submittedByName ?? "unknown user"
+            }: `}
             className={styles.notes}
-            text={sightingDetails.notes}
+            text={props.sightingDetails?.notes ?? ""}
           />
-          <Heading4 text={`sighted by ${sightingDetails.sightedBy}: `} />
+          <Heading4
+            text={`sighted by ${
+              props.sightingDetails?.submittedByName ?? "unknown user"
+            }: `}
+          />
           <ButtonPrimary type="submit" label="contact sighter" />
         </div>
       </div>

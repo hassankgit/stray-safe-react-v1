@@ -9,6 +9,7 @@ import { SightingPreview } from "@/swagger/swagger";
 
 type MarkerWithInfoWindowProps = {
   setOpenDetail: () => void;
+  handleGetDetailsPanelContent: (id: number) => Promise<void>;
   previewDetails: SightingPreview;
 };
 
@@ -32,15 +33,20 @@ export default function MarkerWithInfoWindow(props: MarkerWithInfoWindowProps) {
     <>
       <MarkerF
         position={{
-          lat: props.previewDetails.coordinates.latitude,
-          lng: props.previewDetails.coordinates.longitude,
+          lat: props.previewDetails.coordinates.latitude!,
+          lng: props.previewDetails.coordinates.longitude!,
         }}
         icon={{
           url: "/images/straysafelogored.png",
           scaledSize: new window.google.maps.Size(35, 48),
         }}
         animation={hovered ? window.google.maps.Animation.BOUNCE : undefined}
-        onClick={props.setOpenDetail}
+        onClick={() => {
+          props.setOpenDetail();
+          props.handleGetDetailsPanelContent(
+            props.previewDetails.sightingDetailId ?? -1
+          );
+        }}
         // onClick, send ID to backend GET Sighting/Detail/{id}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
@@ -49,8 +55,8 @@ export default function MarkerWithInfoWindow(props: MarkerWithInfoWindowProps) {
         {hovered && (
           <InfoWindowF
             position={{
-              lat: props.previewDetails.coordinates.latitude,
-              lng: props.previewDetails.coordinates.longitude,
+              lat: props.previewDetails.coordinates.latitude!,
+              lng: props.previewDetails.coordinates.longitude!,
             }}
             zIndex={1}
             options={{

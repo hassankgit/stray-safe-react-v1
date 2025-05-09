@@ -10,6 +10,22 @@
  * ---------------------------------------------------------------
  */
 
+export enum EAnimalSex {
+  MALE = "MALE",
+  FEMALE = "FEMALE",
+  UNKNOWN = "UNKNOWN",
+}
+
+export enum EAnimalAge {
+  ONE_TO_THREE_MONTHS = "ONE_TO_THREE_MONTHS",
+  THREE_TO_SIX_MONTHS = "THREE_TO_SIX_MONTHS",
+  SIX_TO_TWELVE_MONTHS = "SIX_TO_TWELVE_MONTHS",
+  ONE_TO_TWO_YEARS = "ONE_TO_TWO_YEARS",
+  TWO_TO_FIVE_YEARS = "TWO_TO_FIVE_YEARS",
+  FIVE_TO_TEN_YEARS = "FIVE_TO_TEN_YEARS",
+  TEN_PLUS_YEARS = "TEN_PLUS_YEARS",
+}
+
 export interface AppMetadata {
   provider?: string | null;
   providers?: string[] | null;
@@ -17,12 +33,13 @@ export interface AppMetadata {
 
 export interface Coordinates {
   /** @format double */
-  latitude: number;
+  latitude?: number | null;
   /** @format double */
-  longitude: number;
+  longitude?: number | null;
 }
 
 export interface LoginRequest {
+  username?: string | null;
   email?: string | null;
   password?: string | null;
 }
@@ -32,6 +49,26 @@ export interface RegisterRequest {
   email: string;
   /** @minLength 1 */
   password: string;
+}
+
+export interface SightingDetail {
+  /** @format int32 */
+  id?: number;
+  name?: string | null;
+  species?: string | null;
+  breed?: string | null;
+  age?: EAnimalAge;
+  sex?: EAnimalSex;
+  imageUrl?: string | null;
+  /** @format date-time */
+  lastSpotted?: string;
+  location?: string | null;
+  notes?: string | null;
+  submittedById: string | null;
+  submittedByName?: string | null;
+  ageLabel?: string | null;
+  sexLabel?: string | null;
+  tagsArray?: string[] | null;
 }
 
 export interface SightingPreview {
@@ -45,6 +82,8 @@ export interface SightingPreview {
   lastSpotted?: string;
   coordinates: Coordinates;
   submittedById: string | null;
+  /** @format int32 */
+  sightingDetailId?: number | null;
 }
 
 export interface TokenDto {
@@ -107,7 +146,7 @@ export interface ApiConfig<SecurityDataType = unknown> {
   baseUrl?: string;
   baseApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
   securityWorker?: (
-    securityData: SecurityDataType | null
+    securityData: SecurityDataType | null,
   ) => Promise<RequestParams | void> | RequestParams | void;
   customFetch?: typeof fetch;
 }
@@ -152,9 +191,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected encodeQueryParam(key: string, value: any) {
     const encodedKey = encodeURIComponent(key);
-    return `${encodedKey}=${encodeURIComponent(
-      typeof value === "number" ? value : `${value}`
-    )}`;
+    return `${encodedKey}=${encodeURIComponent(typeof value === "number" ? value : `${value}`)}`;
   }
 
   protected addQueryParam(query: QueryParamsType, key: string) {
@@ -169,13 +206,13 @@ export class HttpClient<SecurityDataType = unknown> {
   protected toQueryString(rawQuery?: QueryParamsType): string {
     const query = rawQuery || {};
     const keys = Object.keys(query).filter(
-      (key) => "undefined" !== typeof query[key]
+      (key) => "undefined" !== typeof query[key],
     );
     return keys
       .map((key) =>
         Array.isArray(query[key])
           ? this.addArrayQueryParam(query, key)
-          : this.addQueryParam(query, key)
+          : this.addQueryParam(query, key),
       )
       .join("&");
   }
@@ -202,8 +239,8 @@ export class HttpClient<SecurityDataType = unknown> {
           property instanceof Blob
             ? property
             : typeof property === "object" && property !== null
-            ? JSON.stringify(property)
-            : `${property}`
+              ? JSON.stringify(property)
+              : `${property}`,
         );
         return formData;
       }, new FormData()),
@@ -212,7 +249,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected mergeRequestParams(
     params1: RequestParams,
-    params2?: RequestParams
+    params2?: RequestParams,
   ): RequestParams {
     return {
       ...this.baseApiParams,
@@ -227,7 +264,7 @@ export class HttpClient<SecurityDataType = unknown> {
   }
 
   protected createAbortSignal = (
-    cancelToken: CancelToken
+    cancelToken: CancelToken,
   ): AbortSignal | undefined => {
     if (this.abortControllers.has(cancelToken)) {
       const abortController = this.abortControllers.get(cancelToken);
@@ -273,9 +310,7 @@ export class HttpClient<SecurityDataType = unknown> {
     const responseFormat = format || requestParams.format;
 
     return this.customFetch(
-      `${baseUrl || this.baseUrl || ""}${path}${
-        queryString ? `?${queryString}` : ""
-      }`,
+      `${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`,
       {
         ...requestParams,
         headers: {
@@ -292,7 +327,7 @@ export class HttpClient<SecurityDataType = unknown> {
           typeof body === "undefined" || body === null
             ? null
             : payloadFormatter(body),
-      }
+      },
     ).then(async (response) => {
       const r = response.clone() as HttpResponse<T, E>;
       r.data = null as unknown as T;
@@ -331,7 +366,7 @@ export class HttpClient<SecurityDataType = unknown> {
  * welcome to straysafe API
  */
 export class Api<
-  SecurityDataType extends unknown
+  SecurityDataType extends unknown,
 > extends HttpClient<SecurityDataType> {
   admin = {
     /**
@@ -406,6 +441,23 @@ export class Api<
         body: data,
         secure: true,
         type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Sighting
+     * @name DetailDetail
+     * @request GET:/Sighting/Detail/{id}
+     * @secure
+     */
+    detailDetail: (id: number, params: RequestParams = {}) =>
+      this.request<SightingDetail, any>({
+        path: `/Sighting/Detail/${id}`,
+        method: "GET",
+        secure: true,
         format: "json",
         ...params,
       }),
