@@ -23,7 +23,8 @@ export default function HomeLayout({
     <div className={styles.header_sidebar_body_wrapper}>
       <Header toggleSidebar={() => setIsSidebarOpen((x) => !x)} />
       <div className={styles.sidebar_body_wrapper}>
-        <Sidebar isOpen={isSidebarOpen} />
+        {/* hiding sidebar for now, bugfixing submitting a sighting
+        <Sidebar isOpen={isSidebarOpen} /> */}
         <div className={styles.page_body}>{children}</div>
       </div>
     </div>
