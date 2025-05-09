@@ -77,7 +77,7 @@ export default function Login() {
 }
 
 async function handleLogin(request: LoginRequest) {
-  const res = await api.auth.login(request.username, request.password);
+  const res = await api.auth.login(request);
 
   if (res.ok && res.data.token) {
     localStorage.setItem("token", res.data.token);
