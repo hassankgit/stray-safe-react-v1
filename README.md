@@ -1,38 +1,126 @@
-TODO: update readme!!!
+<h1 align="center">
+    <img src="./src/readmeassets/readmebanner.png" width="100%">
+</h1>
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<h3 align="center">Next.js Typescript frontend for <span style="font-weight:bold;">straysafe</span> — a stray animal reporting platform</h3>
+<h4 align="center">(soon to be open-source!)</h4>
 
-## Getting Started
+<div align="center">
+  <a href="https://forthebadge.com">
+    <img src="./src/readmeassets/made-with-typescript.svg" alt="made with typescript" />
+  </a>
+  <a href="https://forthebadge.com">
+    <img src="./src/readmeassets/built-with-react.svg" alt="built with react" />
+  </a>
+  <a href="https://forthebadge.com">
+    <img src="./src/readmeassets/framework-next.js.svg" alt="framework nextjs" />
+  </a>
+  <a href="https://forthebadge.com">
+    <img src="./src/readmeassets/i-love-animals.svg" alt="i love animals" />
+  </a>
+</div>
+<br/>
 
-First, run the development server:
+<p align="center">
+  <a href="#features">features</a> •
+  <a href="#getting-started">getting started</a> •
+  <a href="#running">running</a> •
+  <a href="#tech-stack">tech stack</a> •
+  <a href="#project-structure">project structure</a> •
+  <a href="#license">license</a>
+</p>
+
+---
+
+## features
+
+- React-based frontend with Next.js and TypeScript
+- integrated with straysafeAPI for stray animal sightings
+- supports basic user authentication
+- dynamic map UI to see sightings in the area
+- Swagger documentation integration
+
+## getting started
+
+**prerequisites:**
+
+- [Node.js (v16 or later)](https://nodejs.org/en/download/)
+- [Vercel account](https://vercel.com) (if you aim to work with production! be sure to log in with GitHub)
+- `.env.local` file (contact me for details)
+
+**clone and run:**
+
+```bash
+# Clone the repo
+git clone https://github.com/hassankgit/stray-safe-v1-frontend.git
+cd stray-safe-v1-frontend
+
+# Set up environment variables
+# please contact me for the .env.local file :D
+
+# Install dependencies
+npm install
+
+# Run the development server
+npm run dev
+```
+
+## running
+
+### for local development:
+
+- to start the development server, run the following command:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- the frontend should be running at <span style="font-weight:bold;">http://localhost:3000</span>. keep in mind that in order to do any API calls, you will need a local instance of straysafe API hosted at https://localhost:7230 as well.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### for local production instance:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- build the project and run the production instance:
 
-## Learn More
+```bash
+npm run build
+npm run start
+```
 
-To learn more about Next.js, take a look at the following resources:
+<p><span style="font-weight:bold;">warning</span>: locally this will also be available at http://localhost:3000, <span style="font-weight:bold;">but it will be pointing to the production API </span>(which uses prod data!).</p>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+to stop either local development or local production instance, do `Ctrl + C` in the Terminal.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## tech stack
 
-## Deploy on Vercel
+- React.js
+- Next.js
+- TypeScript
+- Vercel (for production deployment)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## project structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+stray-safe-v1-frontend/
+|
+├── .next/                     # Next.js build output
+├── node_modules/              # project dependencies
+├── public/                    # static assets (images, fonts, etc.)
+├── src/                       # main source code
+│   ├── app/                   # Next.js app components (routes, layouts, pages, etc.)
+│   ├── components/            # global components
+│   ├── styles/                # global styles (CSS, SCSS)
+│   ├── swagger/               # Swagger integration/endpoints
+│   ├── .env.local             # environment variables (for local dev)
+│   ├── next.config.ts         # Next.js config
+│   ├── package.json           # project dependencies & scripts
+│   ├── README.md              # you are here!
+│   └── tsconfig.json          # TypeScript configuration
+|
+├── .gitignore                 # git ignore file
+├── eslint.config.mjs          # eslint configuration
+└── package-lock.json          # npm lock file
+```
+
+## license
+
+open source license coming soon!
