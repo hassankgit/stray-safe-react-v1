@@ -7,7 +7,7 @@ import MarkerWithInfoWindow from "@/components/map/marker_with_info_window/Marke
 import { api } from "../api";
 import {
   Coordinates,
-  SightingDetail,
+  SightingDetailDto,
   SightingPreview,
 } from "@/swagger/swagger";
 import SightingDetailPanel from "@/components/home/sighting_details/SightingDetail";
@@ -18,6 +18,7 @@ export default function HomePage() {
     height: "100%",
   };
 
+  // TODO: Temporary, switch out for location services or ask for a starting location through search
   const centerPos = {
     latitude: 39.95875593972431,
     longitude: -75.19256400832441,
@@ -27,14 +28,18 @@ export default function HomePage() {
   const mapRef = useRef<google.maps.Map | null>(null);
 
   const [detailsPanelContent, setDetailsPanelContent] =
-    useState<SightingDetail>();
+    useState<SightingDetailDto>();
   const [openDetail, setOpenDetail] = useState(false);
   const [sightings, setSightings] = useState<SightingPreview[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isUserInteracting, setIsUserInteracting] = useState(false);
 
   const handleGetDetailsPanelContent = async (id: number) => {
+    setIsLoading(true);
     const res = await api.sighting.detailById(id);
     if (res.ok) {
       setDetailsPanelContent(res.data);
+      setIsLoading(false);
     } else {
       setDetailsPanelContent(undefined);
     }
@@ -47,9 +52,11 @@ export default function HomePage() {
 
   const fetchSightings = async (center: Coordinates) => {
     try {
+      setIsLoading(true);
       const res = await api.sighting.previews(center);
       if (res.ok && Array.isArray(res.data)) {
         setSightings(res.data);
+        setIsLoading(false);
       } else {
         console.error("api error!: ", res.error?.Message);
       }
@@ -59,23 +66,22 @@ export default function HomePage() {
   };
 
   const handleMapIdle = () => {
-    if (!mapRef.current) return;
-
+    if (!mapRef.current || !isUserInteracting) {
+      return;
+    }
     const center = mapRef.current.getCenter();
-    if (!center) return;
-
+    if (!center) {
+      return;
+    }
     const coords: Coordinates = {
       latitude: center.lat(),
       longitude: center.lng(),
     };
-
-    if (debounceTimer.current) {
-      clearTimeout(debounceTimer.current);
-    }
-
+    if (debounceTimer.current) clearTimeout(debounceTimer.current);
     debounceTimer.current = setTimeout(() => {
       fetchSightings(coords);
-    }, 3000);
+      setIsUserInteracting(false);
+    }, 1500);
   };
 
   useEffect(() => {
@@ -83,6 +89,7 @@ export default function HomePage() {
   }, []);
 
   return (
+    // wraps map and details
     <div className={styles.sighting_details_map_wrapper}>
       <div className={styles.map_container}>
         {isLoaded && (
@@ -93,9 +100,10 @@ export default function HomePage() {
                 lat: centerPos.latitude,
                 lng: centerPos.longitude,
               });
+              map.addListener("dragstart", () => setIsUserInteracting(true));
+              map.addListener("zoom_changed", () => setIsUserInteracting(true));
             }}
             onIdle={handleMapIdle}
-            //
             options={{
               styles: mapStyle,
               disableDefaultUI: true,
@@ -119,6 +127,7 @@ export default function HomePage() {
         )}
       </div>
       <SightingDetailPanel
+        isLoading={isLoading}
         sightingDetails={detailsPanelContent}
         onCloseClick={() => setOpenDetail(false)}
         className={`${styles.sighting_details} ${openDetail && styles.open}`}
