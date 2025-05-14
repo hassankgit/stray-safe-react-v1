@@ -213,17 +213,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/SightingDetail"
+                  "$ref": "#/components/schemas/SightingDetailDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SightingDetail"
+                  "$ref": "#/components/schemas/SightingDetailDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SightingDetail"
+                  "$ref": "#/components/schemas/SightingDetailDto"
                 }
               }
             }
@@ -240,17 +240,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/UserDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/UserDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/UserDto"
                 }
               }
             }
@@ -294,22 +294,6 @@
         },
         "additionalProperties": false
       },
-      "EAnimalAge": {
-        "enum": [
-          "ONE_TO_THREE_MONTHS",
-          "THREE_TO_SIX_MONTHS",
-          "SIX_TO_TWELVE_MONTHS",
-          "ONE_TO_TWO_YEARS",
-          "TWO_TO_FIVE_YEARS",
-          "FIVE_TO_TEN_YEARS",
-          "TEN_PLUS_YEARS"
-        ],
-        "type": "string"
-      },
-      "EAnimalSex": {
-        "enum": ["MALE", "FEMALE", "UNKNOWN"],
-        "type": "string"
-      },
       "LoginRequest": {
         "type": "object",
         "properties": {
@@ -343,7 +327,7 @@
         },
         "additionalProperties": false
       },
-      "SightingDetail": {
+      "SightingDetailDto": {
         "required": ["submittedById"],
         "type": "object",
         "properties": {
@@ -364,10 +348,19 @@
             "nullable": true
           },
           "age": {
-            "$ref": "#/components/schemas/EAnimalAge"
+            "type": "string",
+            "nullable": true
           },
           "sex": {
-            "$ref": "#/components/schemas/EAnimalSex"
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
           },
           "imageUrl": {
             "type": "string",
@@ -392,24 +385,6 @@
           "submittedByName": {
             "type": "string",
             "nullable": true
-          },
-          "ageLabel": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "sexLabel": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "tagsArray": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true,
-            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -525,6 +500,33 @@
           },
           "is_anonymous": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserDto": {
+        "required": ["email", "id"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
