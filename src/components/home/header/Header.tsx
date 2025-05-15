@@ -1,11 +1,17 @@
 import { Dialog } from "@base-ui-components/react";
 import styles from "./Header.module.scss";
-import { HiOutlineMenuAlt2, HiUserCircle } from "react-icons/hi";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import Heading1 from "@/components/headings/heading1/Heading1";
 import Heading4 from "@/components/headings/heading4/Heading4";
+import { LuLogOut } from "react-icons/lu";
 
 type HeaderProps = {
   toggleSidebar?: () => void;
+};
+
+const handleSignOut = () => {
+  localStorage.clear();
+  window.location.href = "/";
 };
 
 export default function Header({ toggleSidebar }: HeaderProps) {
@@ -52,7 +58,7 @@ export default function Header({ toggleSidebar }: HeaderProps) {
           <p className={styles.title}>straysafe</p>
         </div>
       </div>
-      <HiUserCircle className={styles.header_button} />
+      <LuLogOut onClick={handleSignOut} className={styles.header_button} />
     </div>
   );
 }

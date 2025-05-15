@@ -21,11 +21,13 @@ const fetchWithBearer: typeof fetch = async (input, init = {}) => {
 
   try {
     const response = await fetch(input, modifiedInit);
-
+    if (response.status == 401) {
+      console.log("signing out...");
+      handleSignOut();
+    }
     return response;
-  } catch (error) {
+  } catch {
     // TODO: Figure out the best way to show big errors like if the API is down
-    console.log(error);
     throw {
       error: "sorry, could not connect to straysafe. please try again later!",
       success: false,
@@ -42,6 +44,11 @@ export const apiInstance = new Api({
   baseUrl: baseUrl,
   customFetch: fetchWithBearer,
 });
+
+const handleSignOut = () => {
+  localStorage.clear();
+  window.location.href = "/";
+};
 
 // API Formatting:
 // Controller : {
