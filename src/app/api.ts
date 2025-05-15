@@ -26,11 +26,10 @@ const fetchWithBearer: typeof fetch = async (input, init = {}) => {
       handleSignOut();
     }
     return response;
-  } catch (error: any) {
+  } catch {
     // TODO: Figure out the best way to show big errors like if the API is down
     throw {
       error: "sorry, could not connect to straysafe. please try again later!",
-      code: error.code,
       success: false,
     };
   }
