@@ -1,13 +1,16 @@
 import { Camera, GlobalSearch, Messages3, ProfileCircle, Warning2 } from "iconsax-reactjs";
 import styles from "./MobileNavbar.module.scss";
+import DisabledFeatureDialog from "@/components/disabled_feature_dialog/DisabledFeatureDialog";
 
 export default function MobileNavbar() {
     return(
         <div className={styles.navbar_wrapper}>
             <div className={styles.navbar_tabs}>
-                <div className={styles.navbar_button_wrapper}>
-                    <Warning2 className={styles.button}/>
-                </div>
+                <DisabledFeatureDialog>
+                    <div className={styles.navbar_button_wrapper}>
+                        <Warning2 className={styles.button}/>
+                    </div>
+                </DisabledFeatureDialog>
                 <div
                     className={styles.navbar_button_wrapper}
                     onClick={() =>  window.location.href = "/home"}    
