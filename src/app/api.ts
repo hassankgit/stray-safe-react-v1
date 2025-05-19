@@ -45,7 +45,7 @@ export const apiInstance = new Api({
   customFetch: fetchWithBearer,
 });
 
-const handleSignOut = () => {
+export const handleSignOut = () => {
   localStorage.clear();
   window.location.href = "/";
 };
