@@ -11,7 +11,7 @@ export default function ButtonPrimary(props: ButtonPrimaryProps) {
   return (
     <button
       type={props.type}
-      className={`${styles.primary}`}
+      className={styles.primary}
       disabled={props.disabled}
     >
       <p className={styles.primary_label}>{props.label}</p>

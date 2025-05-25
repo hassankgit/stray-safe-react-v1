@@ -8,36 +8,8 @@ import { Form } from "@base-ui-components/react";
 import { FaDog } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { z } from "zod";
+import { registerSchema } from "./RegisterSchema";
 import { useRedirectIfAuthenticated } from "../../app/hooks/useRedirectIfAuthenticated";
-
-// TODO: separate schema into different file
-export const registerSchema = z
-  .object({
-    email: z
-      .string()
-      .nonempty("Email is required")
-      .email("Please enter a valid email"),
-
-    username: z
-      .string()
-      .nonempty("Username is required")
-      .regex(
-        /^[a-zA-Z0-9-._@+]+$/,
-        "Username can only contain letters, numbers, and - . _ @ +"
-      ),
-
-    password: z
-      .string()
-      .nonempty("Password is required")
-      .min(8, "Password must be at least 8 characters long"),
-
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "Passwords do not match",
-  });
 
 export default function RegisterForm() {
   useRedirectIfAuthenticated();
@@ -48,7 +20,7 @@ export default function RegisterForm() {
 
   return (
     <Form
-      className={styles.register_section}
+      className={styles.signup_info}
       errors={errors}
       onClearErrors={setErrors}
       onSubmit={async (event) => {
@@ -93,55 +65,42 @@ export default function RegisterForm() {
         setLoading(false);
       }}
     >
-      <div className={styles.register_info}>
-        <Field.Root name="email" className={styles.register_input_wrapper}>
-          <Field.Control
-            placeholder="Email"
-            className={styles.register_input}
-          />
-          <Field.Error className={styles.register_error} />
+      <div className={styles.input_section}>
+        <Field.Root name="email">
+          <Field.Control placeholder="Email" className={styles.input} />
+          <Field.Error className={styles.error} />
         </Field.Root>
-        <Field.Root name="username" className={styles.register_input_wrapper}>
-          <Field.Control
-            placeholder="Username"
-            className={styles.register_input}
-          />
-          <Field.Error className={styles.register_error} />
+        <Field.Root name="username">
+          <Field.Control placeholder="Username" className={styles.input} />
+          <Field.Error className={styles.error} />
         </Field.Root>
-        <Field.Root name="password" className={styles.register_input_wrapper}>
+        <Field.Root name="password">
           <Field.Control
             placeholder="Password"
             type="password"
-            className={styles.register_input}
+            className={styles.input}
           />
-          <Field.Error className={styles.register_error} />
+          <Field.Error className={styles.error} />
         </Field.Root>
-        <Field.Root
-          name="confirmPassword"
-          className={styles.register_input_wrapper}
-        >
+        <Field.Root name="confirmPassword">
           <Field.Control
             placeholder="Confirm password"
             type="password"
-            className={styles.register_input}
+            className={styles.input}
           />
-          <Field.Error className={styles.register_error} />
+          <Field.Error className={styles.error} />
         </Field.Root>
       </div>
-      <button
-        type="submit"
-        className={styles.register_submit}
-        disabled={loading}
-      >
+      <button type="submit" className={styles.submit} disabled={loading}>
         {!loading ? (
           "Create account"
         ) : (
-          <FaDog className={styles.register_submit_loading} />
+          <FaDog className={styles.submit_loading} />
         )}
       </button>
-      <p className={styles.register_login}>
+      <p className={styles.login_link_wrapper}>
         Already have an account?{" "}
-        <Link className={styles.register_login_link} href="/">
+        <Link className={styles.login_link} href="/">
           Log in here!
         </Link>
       </p>
