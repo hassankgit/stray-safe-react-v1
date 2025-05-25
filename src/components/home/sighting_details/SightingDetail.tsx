@@ -6,7 +6,6 @@ import Tag from "@/components/tag/Tag";
 import InformationItem from "@/components/information/item/InformationItem";
 import TextArea from "@/components/input/custom_input/TextArea";
 import ButtonPrimary from "@/components/input/button_primary/ButtonPrimary";
-import { IoClose } from "react-icons/io5";
 import { SightingDetailDto } from "@/swagger/swagger";
 import { getSpottedTimeAgo } from "@/app/utils/getSpottedTimeAgo";
 
@@ -15,6 +14,7 @@ type SightingDetailProps = {
   onCloseClick: () => void;
   sightingDetails?: SightingDetailDto;
   isLoading?: boolean;
+  open?: boolean;
 };
 
 // TODO move elsewhere
@@ -29,16 +29,15 @@ const tagColors: { [key: string]: string } = {
 
 export default function SightingDetailPanel(props: SightingDetailProps) {
   return (
-    <div className={props.className}>
+    <div
+      className={`${styles.sighting_details} ${props.open && styles.open}`}
+      onClick={props.onCloseClick}
+    >
       {props.isLoading ? (
         <FaDog className={styles.loader} />
       ) : (
         <>
           <div className={styles.sighting_detail}>
-            <IoClose
-              className={styles.close_button}
-              onClick={props.onCloseClick}
-            />
             <div className={styles.image_wrapper}>
               {props.sightingDetails?.imageUrl && (
                 <img

@@ -127,6 +127,7 @@ export default function HomePage() {
         )}
       </div>
       <SightingDetailPanel
+        open={openDetail}
         isLoading={isLoading}
         sightingDetails={detailsPanelContent}
         onCloseClick={() => setOpenDetail(false)}
