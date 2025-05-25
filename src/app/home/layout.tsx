@@ -10,8 +10,9 @@ export default function HomeLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const authorized = useRedirectIfUnauthenticated();
-  // if (!authorized) return null;
+  const authorized = useRedirectIfUnauthenticated();
+  if (!authorized) return null;
+
   return (
     <div className={styles.page_wrapper}>
       <Header />

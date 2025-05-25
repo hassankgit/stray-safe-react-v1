@@ -6,11 +6,10 @@
     background-color: $white;
     display: flex;
     flex-direction: column;
-    gap: 10px;
     padding-left: 24px;
     padding-right: 24px;
     padding-top: 16px;
-    padding-bottom: 16px;
+    padding-bottom: 24px;
     width: 100%;
     height: max-content;
   }
@@ -28,20 +27,6 @@
     height: 24px;
 
     &_wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 8px;
-      border-radius: 16px;
-    }
-    &_wrapper_middle {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 8px;
-      border-radius: 16px;
-      background-color: $primary;
-      color: $white;
     }
   }
 
@@ -54,5 +39,31 @@
     background-color: $primary;
     color: $white;
     border-radius: 16px;
+  }
+}
+
+.label {
+  width: max-content;
+  height: max-content;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar_button_wrapper {
+  width: 60px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 8px;
+
+  &.active {
+    background-color: $primary;
+    color: $white;
   }
 }
