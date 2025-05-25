@@ -10,6 +10,7 @@ import {
 import styles from "./MobileNavbar.module.scss";
 import DisabledFeatureDialog from "@/components/disabled_feature_dialog/DisabledFeatureDialog";
 import { usePathname } from "next/navigation";
+import { redirect } from "next/navigation";
 
 export default function MobileNavbar() {
   const pathname = usePathname();
@@ -24,7 +25,7 @@ export default function MobileNavbar() {
         <DisabledFeatureDialog>
           <div
             className={`${styles.navbar_button_wrapper} ${isTabActive(
-              "/reports"
+              "/home/reports"
             )}`}
           >
             <Warning2 className={styles.button} />
@@ -34,7 +35,7 @@ export default function MobileNavbar() {
         <DisabledFeatureDialog>
           <div
             className={`${styles.navbar_button_wrapper} ${isTabActive(
-              "/upload"
+              "/home/upload"
             )}`}
           >
             <Camera className={styles.button} />
@@ -42,9 +43,11 @@ export default function MobileNavbar() {
           </div>
         </DisabledFeatureDialog>
         <div
-          className={`${styles.navbar_button_wrapper} ${isTabActive("/home")}`}
+          className={`${styles.navbar_button_wrapper} ${isTabActive(
+            "/home/map"
+          )}`}
           onClick={() => {
-            window.location.href = "/home";
+            redirect("/home/map");
           }}
         >
           <GlobalSearch className={styles.button} />
@@ -53,7 +56,7 @@ export default function MobileNavbar() {
         <DisabledFeatureDialog>
           <div
             className={`${styles.navbar_button_wrapper} ${isTabActive(
-              "/messages"
+              "/home/messages"
             )}`}
           >
             <Messages3 className={styles.button} />
@@ -63,7 +66,7 @@ export default function MobileNavbar() {
         <DisabledFeatureDialog>
           <div
             className={`${styles.navbar_button_wrapper} ${isTabActive(
-              "/profile"
+              "/home/profile"
             )}`}
           >
             <ProfileCircle className={styles.button} />
