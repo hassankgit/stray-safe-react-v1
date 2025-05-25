@@ -90,6 +90,10 @@
 
 // Expands the trees to fill out on desktop resolutions
 @media (min-width: 900px) {
+  .trees_wrapper {
+    width: 100%;
+    height: 1000px;
+  }
   .trees {
     width: 100%;
     height: auto;

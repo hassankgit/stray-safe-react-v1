@@ -16,27 +16,27 @@ export const registerSchema = z
   .object({
     email: z
       .string()
-      .nonempty("email is required")
-      .email("please enter a valid email"),
+      .nonempty("Email is required")
+      .email("Please enter a valid email"),
 
     username: z
       .string()
-      .nonempty("username is required")
+      .nonempty("Username is required")
       .regex(
         /^[a-zA-Z0-9-._@+]+$/,
-        "username can only contain letters, numbers, and - . _ @ +"
+        "Username can only contain letters, numbers, and - . _ @ +"
       ),
 
     password: z
       .string()
-      .nonempty("password is required")
-      .min(8, "password must be at least 8 characters long"),
+      .nonempty("Password is required")
+      .min(8, "Password must be at least 8 characters long"),
 
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ["confirmPassword"],
-    message: "passwords do not match",
+    message: "Passwords do not match",
   });
 
 export default function RegisterForm() {
@@ -96,21 +96,21 @@ export default function RegisterForm() {
       <div className={styles.register_info}>
         <Field.Root name="email" className={styles.register_input_wrapper}>
           <Field.Control
-            placeholder="email"
+            placeholder="Email"
             className={styles.register_input}
           />
           <Field.Error className={styles.register_error} />
         </Field.Root>
         <Field.Root name="username" className={styles.register_input_wrapper}>
           <Field.Control
-            placeholder="username"
+            placeholder="Username"
             className={styles.register_input}
           />
           <Field.Error className={styles.register_error} />
         </Field.Root>
         <Field.Root name="password" className={styles.register_input_wrapper}>
           <Field.Control
-            placeholder="password"
+            placeholder="Password"
             type="password"
             className={styles.register_input}
           />
@@ -121,7 +121,7 @@ export default function RegisterForm() {
           className={styles.register_input_wrapper}
         >
           <Field.Control
-            placeholder="confirm password"
+            placeholder="Confirm password"
             type="password"
             className={styles.register_input}
           />
@@ -134,15 +134,15 @@ export default function RegisterForm() {
         disabled={loading}
       >
         {!loading ? (
-          "sign up!"
+          "Create account"
         ) : (
           <FaDog className={styles.register_submit_loading} />
         )}
       </button>
       <p className={styles.register_login}>
-        already have an account?{" "}
+        Already have an account?{" "}
         <Link className={styles.register_login_link} href="/">
-          log in here!
+          Log in here!
         </Link>
       </p>
     </Form>
