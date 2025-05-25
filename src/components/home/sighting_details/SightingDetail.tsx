@@ -6,7 +6,6 @@ import Tag from "@/components/tag/Tag";
 import InformationItem from "@/components/information/item/InformationItem";
 import TextArea from "@/components/input/custom_input/TextArea";
 import ButtonPrimary from "@/components/input/button_primary/ButtonPrimary";
-import { IoClose } from "react-icons/io5";
 import { SightingDetailDto } from "@/swagger/swagger";
 import { getSpottedTimeAgo } from "@/app/utils/getSpottedTimeAgo";
 
@@ -15,6 +14,7 @@ type SightingDetailProps = {
   onCloseClick: () => void;
   sightingDetails?: SightingDetailDto;
   isLoading?: boolean;
+  open?: boolean;
 };
 
 // TODO move elsewhere
@@ -29,16 +29,15 @@ const tagColors: { [key: string]: string } = {
 
 export default function SightingDetailPanel(props: SightingDetailProps) {
   return (
-    <div className={props.className}>
+    <div
+      className={`${styles.sighting_details} ${props.open && styles.open}`}
+      onClick={props.onCloseClick}
+    >
       {props.isLoading ? (
         <FaDog className={styles.loader} />
       ) : (
         <>
           <div className={styles.sighting_detail}>
-            <IoClose
-              className={styles.close_button}
-              onClick={props.onCloseClick}
-            />
             <div className={styles.image_wrapper}>
               {props.sightingDetails?.imageUrl && (
                 <img
@@ -55,6 +54,7 @@ export default function SightingDetailPanel(props: SightingDetailProps) {
                     text={props.sightingDetails?.name ?? "Unknown name"}
                   />
                   <Heading1
+                    className={styles.subheading}
                     text={`${
                       props.sightingDetails?.species ?? "Unknown species"
                     } - ${props.sightingDetails?.breed ?? "Unknown breed"}`}
@@ -75,7 +75,7 @@ export default function SightingDetailPanel(props: SightingDetailProps) {
                 </div>
               </div>
               <div className={styles.tag_section}>
-                <Heading4 text={"this animal is..."} />
+                <Heading4 text="This animal is..." />
 
                 <div className={styles.tag_wrapper}>
                   {props.sightingDetails?.tags &&
@@ -85,38 +85,36 @@ export default function SightingDetailPanel(props: SightingDetailProps) {
                 </div>
               </div>
               <div className={styles.information_table}>
-                <Heading4 text="information:" />
+                <Heading4 text="Information:" />
                 <div className={styles.information_wrapper}>
                   <InformationItem
-                    label="species"
-                    tagLabel={
-                      props.sightingDetails?.species ?? "unknown species"
-                    }
+                    label="Species"
+                    tagLabel={props.sightingDetails?.species ?? "Unknown"}
                   />
                   <InformationItem
-                    label="breed"
-                    tagLabel={props.sightingDetails?.breed ?? "unknown"}
+                    label="Breed"
+                    tagLabel={props.sightingDetails?.breed ?? "Unknown"}
                   />
                   <InformationItem
-                    label="age"
-                    tagLabel={props.sightingDetails?.age ?? "unknown"}
+                    label="Age"
+                    tagLabel={props.sightingDetails?.age ?? "Unknown"}
                   />
                   <InformationItem
-                    label="sex"
-                    tagLabel={props.sightingDetails?.sex ?? "unknown"}
+                    label="Sex"
+                    tagLabel={props.sightingDetails?.sex ?? "Unknown"}
                     tagColor={tagColors[props.sightingDetails?.sex ?? "gray"]}
                   />
                 </div>
               </div>
               <TextArea
-                label={`notes from ${
-                  props.sightingDetails?.submittedByName ?? "unknown user"
+                label={`Notes from ${
+                  props.sightingDetails?.submittedByName ?? "Unknown user"
                 }: `}
                 className={styles.notes}
                 text={props.sightingDetails?.notes ?? ""}
               />
               <Heading4
-                text={`sighted by ${
+                text={`Sighted by ${
                   props.sightingDetails?.submittedByName ?? "unknown user"
                 }: `}
               />

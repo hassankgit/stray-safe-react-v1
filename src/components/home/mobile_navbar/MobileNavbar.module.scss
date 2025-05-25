@@ -1,0 +1,80 @@
+@use "../../../styles/_variables.sass" as *;
+
+.navbar {
+  &_wrapper {
+    z-index: 2;
+    background-color: $white;
+    display: flex;
+    flex-direction: column;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 16px;
+    padding-bottom: 24px;
+    width: 100%;
+    height: max-content;
+  }
+
+  &_tabs {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+    height: max-content;
+    color: $primary;
+  }
+  &_button {
+    width: 24px;
+    height: 24px;
+
+    &_wrapper {
+    }
+  }
+
+  &_middle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 8px;
+    background-color: $primary;
+    color: $white;
+    border-radius: 16px;
+  }
+}
+
+.label {
+  width: max-content;
+  height: max-content;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar_button_wrapper {
+  width: 60px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+
+  &.active {
+    background-color: $primary;
+    color: $white;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $primary;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: $inputBorder;
+  }
+}
