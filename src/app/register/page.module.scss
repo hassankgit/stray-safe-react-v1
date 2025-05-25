@@ -63,10 +63,21 @@
 }
 
 // Expands the trees to fill out on desktop resolutions
-@media (min-width: 900px) {
+@media (min-width: 1200px) {
   .trees_wrapper {
     width: 100%;
-    height: 1000px;
+    height: 600px;
+  }
+  .trees {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (min-width: 1600px) {
+  .trees_wrapper {
+    width: 100%;
+    height: 800px;
   }
   .trees {
     width: 100%;
