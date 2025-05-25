@@ -49,13 +49,13 @@ export default function Login() {
       <div className={styles.login_info}>
         <Field.Root name="username" className={styles.login_input_wrapper}>
           <Field.Control
-            placeholder="username or email"
+            placeholder="Email or username"
             className={styles.login_input}
           />
         </Field.Root>
         <Field.Root name="password" className={styles.login_input_wrapper}>
           <Field.Control
-            placeholder="password"
+            placeholder="Password"
             type="password"
             className={styles.login_input}
           />
@@ -63,7 +63,7 @@ export default function Login() {
         </Field.Root>
       </div>
       <button type="submit" className={styles.login_submit} disabled={loading}>
-        {!loading ? "login" : <FaDog className={styles.login_submit_loading} />}
+        {!loading ? "Login" : <FaDog className={styles.login_submit_loading} />}
       </button>
       <p className={styles.login_register}>
         don&apos;t have an account?{" "}
