@@ -20,7 +20,7 @@ export default function RegisterForm() {
 
   return (
     <Form
-      className={styles.signup_info}
+      className={styles.signup}
       errors={errors}
       onClearErrors={setErrors}
       onSubmit={async (event) => {
