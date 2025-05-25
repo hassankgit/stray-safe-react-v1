@@ -61,9 +61,20 @@
   justify-content: center;
   gap: 4px;
   border-radius: 8px;
+  transition: background-color 0.2s;
 
   &.active {
     background-color: $primary;
     color: $white;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $primary;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: $inputBorder;
   }
 }

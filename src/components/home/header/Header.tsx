@@ -15,7 +15,9 @@ export default function Header() {
           <p className={styles.title}>straysafe</p>
         </div>
       </div>
-      <LuLogOut onClick={handleSignOut} className={styles.header_button} />
+      <div className={styles.header_button_wrapper}>
+        <LuLogOut onClick={handleSignOut} className={styles.header_button} />
+      </div>
     </div>
   );
 }
