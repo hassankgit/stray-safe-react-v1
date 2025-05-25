@@ -9,12 +9,12 @@ import {
 } from "iconsax-reactjs";
 import styles from "./MobileNavbar.module.scss";
 import DisabledFeatureDialog from "@/components/disabled_feature_dialog/DisabledFeatureDialog";
-import { useState } from "react";
 import { usePathname } from "next/navigation";
 
 export default function MobileNavbar() {
+  const pathname = usePathname();
+
   const isTabActive = (tab: string) => {
-    const pathname = usePathname();
     return pathname == tab ? styles.active : "";
   };
 
