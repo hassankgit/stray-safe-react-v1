@@ -5,7 +5,6 @@ import {
   RegisterRequest,
 } from "../swagger/swagger";
 import { isProd } from "./utils/utils";
-import { redirect } from "next/navigation";
 
 const fetchWithBearer: typeof fetch = async (input, init = {}) => {
   const token = localStorage.getItem("token");
@@ -48,7 +47,7 @@ export const apiInstance = new Api({
 
 export const handleSignOut = () => {
   localStorage.clear();
-  redirect("/");
+  window.location.href = "/";
 };
 
 // API Formatting:

@@ -1,5 +1,14 @@
 @use "../../../styles/_variables.sass" as *;
 
+.title_and_buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: max-content;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .header {
   z-index: 2;
   width: 100%;
@@ -41,7 +50,7 @@
   font-size: 24px;
 }
 
-.header_button {
+.button {
   width: 24px;
   height: 24px;
   color: $primary;

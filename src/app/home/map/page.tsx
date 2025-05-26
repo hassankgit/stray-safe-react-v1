@@ -89,7 +89,6 @@ export default function MapPage() {
   }, []);
 
   return (
-    // wraps map and details
     <div className={styles.sighting_details_map_wrapper}>
       <div className={styles.map_container}>
         {isLoaded && (
@@ -107,6 +106,9 @@ export default function MapPage() {
             options={{
               styles: mapStyle,
               disableDefaultUI: true,
+              clickableIcons: false,
+              gestureHandling: "greedy",
+              mapTypeControl: false,
             }}
             mapContainerStyle={containerStyle}
             zoom={17}

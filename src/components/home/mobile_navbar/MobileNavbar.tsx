@@ -10,9 +10,10 @@ import {
 import styles from "./MobileNavbar.module.scss";
 import DisabledFeatureDialog from "@/components/disabled_feature_dialog/DisabledFeatureDialog";
 import { usePathname } from "next/navigation";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function MobileNavbar() {
+  const router = useRouter();
   const pathname = usePathname();
 
   const isTabActive = (tab: string) => {
@@ -47,7 +48,7 @@ export default function MobileNavbar() {
             "/home/map"
           )}`}
           onClick={() => {
-            redirect("/home/map");
+            router.push("/home/map");
           }}
         >
           <GlobalSearch className={styles.button} />
@@ -68,6 +69,10 @@ export default function MobileNavbar() {
             className={`${styles.navbar_button_wrapper} ${isTabActive(
               "/home/profile"
             )}`}
+            // TODO: Uncomment this when profile page is done
+            // onClick={() => {
+            //   router.push("/home/profile");
+            // }}
           >
             <ProfileCircle className={styles.button} />
             <p className={styles.label}>Profile</p>
