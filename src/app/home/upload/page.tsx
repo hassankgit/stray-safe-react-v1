@@ -34,7 +34,7 @@ export default function Upload() {
 
   return (
     <div className={styles.body}>
-      {isFileUploaded ? (
+      {!isFileUploaded ? (
         <>
           <img
             className={styles.image}

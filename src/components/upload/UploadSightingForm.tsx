@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { FaDog } from "react-icons/fa6";
 import CustomSelect from "../input/select/Select";
 import { selectItems } from "./SelectItems";
+import { useRouter } from "next/navigation";
 
 type UploadSightingFormProps = {
   url: string | null;
@@ -24,6 +25,7 @@ type UploadSightingFormProps = {
 };
 
 export default function UploadSightingForm(props: UploadSightingFormProps) {
+  const router = useRouter();
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [dateTime, setDateTime] = useState("");
@@ -96,19 +98,20 @@ export default function UploadSightingForm(props: UploadSightingFormProps) {
             };
 
             console.log(sightingCreateRequest);
-            // setLoading(true);
-            // const res = await handleSightingCreate(sightingCreateRequest);
-            // if (!res.success) {
-            //   const serverErrors = {
-            //     username: res.error,
-            //     password: res.error,
-            //   };
-            //   setErrors(serverErrors);
-            // } else {
-            //   router.push("/home");
-            // }
+            setLoading(true);
+            const res = await handleSightingCreate(sightingCreateRequest);
+            console.log(res);
+            if (!res.success) {
+              const serverErrors = {
+                username: res.error,
+                password: res.error,
+              };
+              setErrors(serverErrors);
+            } else {
+              // router.push("/home");
+            }
 
-            // setLoading(false);
+            setLoading(false);
           }}
         >
           <div className={styles.input_section}>

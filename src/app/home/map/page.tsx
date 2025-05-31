@@ -13,6 +13,7 @@ import {
 import SightingDetailPanel from "@/components/home/sighting_details/SightingDetail";
 
 const libraries: Libraries = ["places"];
+
 export default function MapPage() {
   const containerStyle = {
     width: "100%",
