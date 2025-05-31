@@ -231,6 +231,99 @@
         }
       }
     },
+    "/Sighting/Upload": {
+      "post": {
+        "tags": ["Sighting"],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Sighting/Create": {
+      "post": {
+        "tags": ["Sighting"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSightingRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSightingRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSightingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSightingResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSightingResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSightingResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/User/Me": {
       "get": {
         "tags": ["User"],
@@ -293,6 +386,99 @@
           }
         },
         "additionalProperties": false
+      },
+      "CreateSightingRequest": {
+        "required": ["coordinates"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "species": {
+            "type": "string",
+            "nullable": true
+          },
+          "breed": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "coordinates": {
+            "$ref": "#/components/schemas/Coordinates"
+          },
+          "location": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "age": {
+            "$ref": "#/components/schemas/EAnimalAge"
+          },
+          "sex": {
+            "$ref": "#/components/schemas/EAnimalSex"
+          },
+          "status": {
+            "$ref": "#/components/schemas/EAnimalStatus"
+          },
+          "behavior": {
+            "$ref": "#/components/schemas/EAnimalBehavior"
+          },
+          "health": {
+            "$ref": "#/components/schemas/EAnimalHealth"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateSightingResponseDto": {
+        "type": "object",
+        "properties": {
+          "sightingId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "EAnimalAge": {
+        "enum": [
+          "ONE_TO_THREE_MONTHS",
+          "THREE_TO_SIX_MONTHS",
+          "SIX_TO_TWELVE_MONTHS",
+          "ONE_TO_TWO_YEARS",
+          "TWO_TO_FIVE_YEARS",
+          "FIVE_TO_TEN_YEARS",
+          "TEN_PLUS_YEARS"
+        ],
+        "type": "string"
+      },
+      "EAnimalBehavior": {
+        "enum": ["FRIENDLY", "AGGRESSIVE", "TIMID", "UNKNOWN"],
+        "type": "string"
+      },
+      "EAnimalHealth": {
+        "enum": ["HEALTHY", "INJURED", "UNKNOWN"],
+        "type": "string"
+      },
+      "EAnimalSex": {
+        "enum": ["MALE", "FEMALE", "UNKNOWN"],
+        "type": "string"
+      },
+      "EAnimalStatus": {
+        "enum": ["SAFE_WITH_ME", "STILL_ROAMING", "DECEASED", "UNKNOWN"],
+        "type": "string"
       },
       "LoginRequest": {
         "type": "object",
@@ -439,6 +625,24 @@
           "token": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UploadResponseDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "coordinates": {
+            "$ref": "#/components/schemas/Coordinates"
           }
         },
         "additionalProperties": false

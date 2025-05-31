@@ -1,0 +1,18 @@
+@use "../../styles/_variables.sass" as *;
+
+.image {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  max-width: 300px;
+}
+
+.sublabel_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .sublabel {
+    line-height: 20px;
+  }
+}

@@ -1,0 +1,73 @@
+@use "../../../styles/_variables.sass" as *;
+
+.body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  padding: 48px;
+  gap: 48px;
+  align-items: center;
+
+  .image {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    max-width: 300px;
+  }
+
+  .button_wrapper {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .button {
+      width: 100%;
+      height: max-content;
+    }
+  }
+}
+
+.primary {
+  max-width: 300px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: max-content;
+  align-items: center;
+  justify-content: center;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
+  background-color: $coral;
+  border: none;
+  border-radius: 8px;
+  font-family: "Poppins";
+  font-weight: "400";
+
+  &:hover {
+    cursor: pointer;
+    background-color: $lightCoral;
+  }
+
+  &:active,
+  &:disabled {
+    background-color: #cf4249;
+  }
+
+  &_label {
+    font-family: "Poppins";
+    font-size: 16px;
+    line-height: 12px;
+    font-weight: 400;
+    color: $white;
+  }
+}
+
+.hidden_input {
+  display: none;
+}

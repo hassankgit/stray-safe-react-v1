@@ -1,6 +1,8 @@
 import {
   Api,
+  // ContentType,
   Coordinates,
+  CreateSightingRequest,
   LoginRequest,
   RegisterRequest,
 } from "../swagger/swagger";
@@ -13,7 +15,7 @@ const fetchWithBearer: typeof fetch = async (input, init = {}) => {
     ...init,
     headers: {
       ...(init.headers || {}),
-      "Content-Type": "application/json",
+      // "Content-Type": "application/json", // TODO make sure this doesn't break anything
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
     credentials: "include",
@@ -71,5 +73,9 @@ export const api = {
       apiInstance.sighting.previewsCreate(request, { format: "json" }),
     detailById: (request: number) =>
       apiInstance.sighting.detailDetail(request, { format: "json" }),
+    upload: (file: File) =>
+      apiInstance.sighting.uploadCreate({ file: file }, { format: "json" }),
+    createSighting: (request: CreateSightingRequest) =>
+      apiInstance.sighting.createCreate(request, { format: "json" }),
   },
 };
