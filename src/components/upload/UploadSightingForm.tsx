@@ -10,13 +10,12 @@ import {
   EAnimalSex,
   EAnimalStatus,
 } from "@/swagger/swagger";
-import { Field, Form, Input, Select } from "@base-ui-components/react";
+import { Field, Form } from "@base-ui-components/react";
 import { api } from "../../app/api";
 import { useEffect, useState } from "react";
 import { FaDog } from "react-icons/fa6";
-import CustomSelect, { SelectItem } from "../input/select/Select";
+import CustomSelect from "../input/select/Select";
 import { selectItems } from "./SelectItems";
-import { Libraries, useJsApiLoader } from "@react-google-maps/api";
 
 type UploadSightingFormProps = {
   url: string | null;
