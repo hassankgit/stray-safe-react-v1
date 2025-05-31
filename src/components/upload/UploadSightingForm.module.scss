@@ -16,3 +16,55 @@
     line-height: 20px;
   }
 }
+
+.input_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input_label {
+  color: $subheading;
+}
+
+.input_section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+
+  .input {
+    color: black;
+    width: 100%;
+    background-color: white;
+    height: 2.5rem;
+    font-family: "Poppins";
+    font-size: 14px;
+    padding-left: 1.5rem;
+    border: 1px solid $inputBorder;
+    border-radius: 0.625rem;
+  }
+}
+
+.submit {
+  color: $white;
+  width: 100%;
+  background-color: $coral;
+  height: 2.5rem;
+  font-family: "Poppins";
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.6rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+  &:active,
+  &:disabled {
+    background-color: #cf4249;
+  }
+  &_loading {
+    margin-top: 0.5rem;
+    animation: floatUpDown 1s ease-in-out infinite;
+  }
+}

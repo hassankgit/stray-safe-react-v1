@@ -34,7 +34,7 @@ export default function Upload() {
 
   return (
     <div className={styles.body}>
-      {!isFileUploaded ? (
+      {isFileUploaded ? (
         <>
           <img
             className={styles.image}
@@ -54,7 +54,7 @@ export default function Upload() {
         </>
       ) : (
         <>
-          <UploadSightingForm url={uploadResponse?.url ?? ""} />
+          <UploadSightingForm url={uploadResponse?.url ?? null} />
         </>
       )}
     </div>

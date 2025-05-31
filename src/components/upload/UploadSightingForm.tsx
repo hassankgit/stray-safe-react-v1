@@ -10,26 +10,44 @@ import {
   EAnimalSex,
   EAnimalStatus,
 } from "@/swagger/swagger";
-import { Field, Form } from "@base-ui-components/react";
+import { Field, Form, Input } from "@base-ui-components/react";
 import { api } from "../../app/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { FaDog } from "react-icons/fa6";
 
 type UploadSightingFormProps = {
-  url: string;
+  url: string | null;
   coordinates?: Coordinates;
   dateTime?: string;
 };
 
+console.log(new Date());
 export default function UploadSightingForm(props: UploadSightingFormProps) {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+
+  const [dateTime, setDateTime] = useState("");
+
+  useEffect(() => {
+    const value = props.dateTime ? new Date(props.dateTime) : new Date();
+
+    const toInputFormat = (date: Date) => {
+      return date.toISOString().slice(0, 16);
+    };
+
+    setDateTime(toInputFormat(value));
+  }, [props]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDateTime(e.target.value);
+  };
 
   return (
     <>
       <Heading1 text="Image Preview" />
       <img
         className={styles.image}
-        src={props.url ?? ""}
+        src={props.url ?? "/images/fileupload_coral_labelled.png"}
         alt="user uploaded image"
       />
       <div className={styles.sublabel_wrapper}>
@@ -40,7 +58,7 @@ export default function UploadSightingForm(props: UploadSightingFormProps) {
         />
         <Heading4
           className={styles.sublabel}
-          text="It's much beter to have less information than wrong
+          text="It's much better to have less information than wrong
               information. Thank You!"
         />
         <Form
@@ -70,6 +88,7 @@ export default function UploadSightingForm(props: UploadSightingFormProps) {
               notes: formData.get("notes") as string,
             };
 
+            console.log(sightingCreateRequest);
             // setLoading(true);
             // const res = await handleSightingCreate(sightingCreateRequest);
             // if (!res.success) {
@@ -86,13 +105,49 @@ export default function UploadSightingForm(props: UploadSightingFormProps) {
           }}
         >
           <div className={styles.input_section}>
-            <Field.Root name="username">
+            <Field.Root name="name" className={styles.input_wrapper}>
+              <Field.Label className={styles.input_label}>Name</Field.Label>
               <Field.Control
-                placeholder="Email or username"
+                placeholder="Ex. Hercules"
                 className={styles.input}
               />
             </Field.Root>
-            <Field.Root name="password">
+
+            <Field.Root name="species" className={styles.input_wrapper}>
+              <Field.Label className={styles.input_label}>Species</Field.Label>
+              <Field.Control placeholder="Ex. Cat" className={styles.input} />
+            </Field.Root>
+
+            <Field.Root name="breed" className={styles.input_wrapper}>
+              <Field.Label className={styles.input_label}>Breed</Field.Label>
+              <Field.Control placeholder="Ex. Tabby" className={styles.input} />
+            </Field.Root>
+
+            <Field.Root name="breed" className={styles.input_wrapper}>
+              <Field.Label className={styles.input_label}>
+                Time and Date of Sighting
+              </Field.Label>
+              {/* 
+              <input
+                type="datetime-local"
+                // id="datetime-local-input"
+              /> */}
+              {/* <Field.Control
+                type="datetime-local"
+                className={styles.input}
+                defaultValue={dateAsString}
+                onClick={(e) => e.currentTarget.showPicker()}
+              /> */}
+              <Field.Control
+                type="datetime-local"
+                value={dateTime}
+                onChange={handleChange}
+                onClick={(e) => e.currentTarget.showPicker()}
+                className={styles.input}
+              />
+            </Field.Root>
+
+            <Field.Root name="test">
               <Field.Control
                 placeholder="Password"
                 type="password"
@@ -102,7 +157,11 @@ export default function UploadSightingForm(props: UploadSightingFormProps) {
             </Field.Root>
           </div>
           <button type="submit" className={styles.submit} disabled={loading}>
-            {!loading ? "Login" : <FaDog className={styles.submit_loading} />}
+            {!loading ? (
+              "Submit sighting"
+            ) : (
+              <FaDog className={styles.submit_loading} />
+            )}
           </button>
         </Form>
       </div>
