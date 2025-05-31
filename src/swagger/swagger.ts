@@ -44,6 +44,7 @@ export enum EAnimalAge {
   TWO_TO_FIVE_YEARS = "TWO_TO_FIVE_YEARS",
   FIVE_TO_TEN_YEARS = "FIVE_TO_TEN_YEARS",
   TEN_PLUS_YEARS = "TEN_PLUS_YEARS",
+  UNKNOWN = "UNKNOWN",
 }
 
 export interface AppMetadata {
