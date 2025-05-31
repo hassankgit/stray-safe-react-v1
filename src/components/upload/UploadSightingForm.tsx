@@ -10,10 +10,13 @@ import {
   EAnimalSex,
   EAnimalStatus,
 } from "@/swagger/swagger";
-import { Field, Form, Input } from "@base-ui-components/react";
+import { Field, Form, Input, Select } from "@base-ui-components/react";
 import { api } from "../../app/api";
 import { useEffect, useState } from "react";
 import { FaDog } from "react-icons/fa6";
+import CustomSelect, { SelectItem } from "../input/select/Select";
+import { selectItems } from "./SelectItems";
+import { Libraries, useJsApiLoader } from "@react-google-maps/api";
 
 type UploadSightingFormProps = {
   url: string | null;
@@ -21,11 +24,9 @@ type UploadSightingFormProps = {
   dateTime?: string;
 };
 
-console.log(new Date());
 export default function UploadSightingForm(props: UploadSightingFormProps) {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-
   const [dateTime, setDateTime] = useState("");
 
   useEffect(() => {
@@ -62,12 +63,19 @@ export default function UploadSightingForm(props: UploadSightingFormProps) {
               information. Thank You!"
         />
         <Form
-          className={styles.login}
+          className={styles.form}
           errors={errors}
           onClearErrors={setErrors}
           onSubmit={async (event) => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
+
+            // testing
+            console.log("age:", formData.get("age"));
+            console.log("sex:", formData.get("sex"));
+            console.log("status:", formData.get("status"));
+            console.log("behavior:", formData.get("behavior"));
+            console.log("health:", formData.get("health"));
 
             const sightingCreateRequest: CreateSightingRequest = {
               name: formData.get("name") as string,
@@ -111,49 +119,117 @@ export default function UploadSightingForm(props: UploadSightingFormProps) {
                 placeholder="Ex. Hercules"
                 className={styles.input}
               />
+              <Field.Description className={styles.input_sublabel}>
+                The name of the animal (check collars or signs nearby if
+                applicable)
+              </Field.Description>
             </Field.Root>
 
             <Field.Root name="species" className={styles.input_wrapper}>
               <Field.Label className={styles.input_label}>Species</Field.Label>
               <Field.Control placeholder="Ex. Cat" className={styles.input} />
+              <Field.Description className={styles.input_sublabel}>
+                The species of the animal (cat, dog, cockatiel, etc.)
+              </Field.Description>
             </Field.Root>
 
             <Field.Root name="breed" className={styles.input_wrapper}>
               <Field.Label className={styles.input_label}>Breed</Field.Label>
               <Field.Control placeholder="Ex. Tabby" className={styles.input} />
+              <Field.Description className={styles.input_sublabel}>
+                The breed of the animal (Tabby, British Shorthair, etc.)
+              </Field.Description>
             </Field.Root>
 
-            <Field.Root name="breed" className={styles.input_wrapper}>
+            <Field.Root name="dateTime" className={styles.input_wrapper}>
               <Field.Label className={styles.input_label}>
                 Time and Date of Sighting
               </Field.Label>
-              {/* 
-              <input
-                type="datetime-local"
-                // id="datetime-local-input"
-              /> */}
-              {/* <Field.Control
-                type="datetime-local"
-                className={styles.input}
-                defaultValue={dateAsString}
-                onClick={(e) => e.currentTarget.showPicker()}
-              /> */}
               <Field.Control
+                name="dateTime"
                 type="datetime-local"
                 value={dateTime}
                 onChange={handleChange}
                 onClick={(e) => e.currentTarget.showPicker()}
                 className={styles.input}
               />
+              <Field.Description className={styles.input_sublabel}>
+                When did you see this animal?
+              </Field.Description>
             </Field.Root>
 
-            <Field.Root name="test">
-              <Field.Control
-                placeholder="Password"
-                type="password"
-                className={styles.input}
+            <Field.Root name="age" className={styles.input_wrapper}>
+              <Field.Label className={styles.input_label}>Age</Field.Label>
+              <CustomSelect
+                name="age"
+                placeholder={selectItems.age.placeholder}
+                items={selectItems.age.items}
+                defaultValue={selectItems.age.items[0].value}
               />
-              <Field.Error className={styles.error} />
+              <Field.Description className={styles.input_sublabel}>
+                {selectItems.age.description}
+              </Field.Description>
+            </Field.Root>
+
+            <Field.Root name="sex" className={styles.input_wrapper}>
+              <Field.Label className={styles.input_label}>Sex</Field.Label>
+              <CustomSelect
+                name="sex"
+                placeholder={selectItems.sex.placeholder}
+                items={selectItems.sex.items}
+                defaultValue={selectItems.sex.items[0].value}
+              />
+              <Field.Description className={styles.input_sublabel}>
+                {selectItems.sex.description}
+              </Field.Description>
+            </Field.Root>
+
+            <Field.Root name="status" className={styles.input_wrapper}>
+              <Field.Label className={styles.input_label}>Status</Field.Label>
+              <CustomSelect
+                name="status"
+                placeholder={selectItems.status.placeholder}
+                items={selectItems.status.items}
+                defaultValue={selectItems.status.items[0].value}
+              />
+              <Field.Description className={styles.input_sublabel}>
+                {selectItems.status.description}
+              </Field.Description>
+            </Field.Root>
+
+            <Field.Root name="behavior" className={styles.input_wrapper}>
+              <Field.Label className={styles.input_label}>Behavior</Field.Label>
+              <CustomSelect
+                name="behavior"
+                placeholder={selectItems.behavior.placeholder}
+                items={selectItems.behavior.items}
+                defaultValue={selectItems.behavior.items[0].value}
+              />
+              <Field.Description className={styles.input_sublabel}>
+                {selectItems.behavior.description}
+              </Field.Description>
+            </Field.Root>
+
+            <Field.Root name="health" className={styles.input_wrapper}>
+              <Field.Label className={styles.input_label}>Health</Field.Label>
+              <CustomSelect
+                name="health"
+                placeholder={selectItems.health.placeholder}
+                items={selectItems.health.items}
+                defaultValue={selectItems.health.items[0].value}
+              />
+              <Field.Description className={styles.input_sublabel}>
+                {selectItems.health.description}
+              </Field.Description>
+            </Field.Root>
+
+            <Field.Root name="notes" className={styles.input_wrapper}>
+              <Field.Label className={styles.input_label}>Notes</Field.Label>
+              <Field.Control placeholder="" className={styles.input} />
+              <Field.Description className={styles.input_sublabel}>
+                Be sure to include any additional information! (i.e. this might
+                be someone’s lost pet, it has a sibling, it has babies, etc.)
+              </Field.Description>
             </Field.Root>
           </div>
           <button type="submit" className={styles.submit} disabled={loading}>
