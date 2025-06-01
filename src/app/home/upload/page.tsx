@@ -1,8 +1,7 @@
 "use client";
 
 import styles from "./page.module.scss";
-import { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { api } from "@/app/api";
 import { UploadResponseDto } from "@/swagger/swagger";
 import UploadSightingForm from "@/components/upload/UploadSightingForm";
@@ -22,7 +21,6 @@ export default function Upload() {
       const response = await api.sighting.upload(file);
       if (response.ok && response.data) {
         setUploadResponse(response.data);
-        console.log(response.data);
         setIsLoading(false);
         setIsFileUploaded(true);
       }
@@ -54,7 +52,10 @@ export default function Upload() {
         </>
       ) : (
         <>
-          <UploadSightingForm url={uploadResponse?.url ?? null} />
+          <UploadSightingForm
+            url={uploadResponse?.url ?? null}
+            coordinates={uploadResponse?.coordinates}
+          />
         </>
       )}
     </div>

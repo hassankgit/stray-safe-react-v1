@@ -4,6 +4,7 @@ import Header from "@/components/home/header/Header";
 import styles from "./layout.module.scss";
 import { useRedirectIfUnauthenticated } from "../hooks/useRedirectIfUnauthenticated";
 import MobileNavbar from "@/components/home/mobile_navbar/MobileNavbar";
+import { GoogleMapsLoaderProvider } from "../context/GoogleMapsLoaderContext";
 
 export default function HomeLayout({
   children,
@@ -14,10 +15,12 @@ export default function HomeLayout({
   if (!authorized) return null;
 
   return (
-    <div className={styles.page_wrapper}>
-      <Header />
-      <div className={styles.page_body}>{children}</div>
-      <MobileNavbar />
-    </div>
+    <GoogleMapsLoaderProvider>
+      <div className={styles.page_wrapper}>
+        <Header />
+        <div className={styles.page_body}>{children}</div>
+        <MobileNavbar />
+      </div>
+    </GoogleMapsLoaderProvider>
   );
 }

@@ -24,7 +24,6 @@ const fetchWithBearer: typeof fetch = async (input, init = {}) => {
   try {
     const response = await fetch(input, modifiedInit);
     if (response.status == 401) {
-      console.log("signing out...");
       handleSignOut();
     }
     return response;

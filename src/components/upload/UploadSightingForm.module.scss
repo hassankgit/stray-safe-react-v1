@@ -8,10 +8,20 @@
   gap: 24px;
 }
 
+.image_and_header {
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
 .image {
   width: 100%;
   height: auto;
   max-width: 300px;
+  border: 4px solid $subheading;
+  border-radius: 8px;
 }
 
 .sublabel_wrapper {
