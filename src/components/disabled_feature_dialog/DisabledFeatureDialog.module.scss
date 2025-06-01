@@ -1,0 +1,102 @@
+@use "../../styles/_variables.sass" as *;
+
+.header_button {
+  &_wrapper {
+    background-color: transparent;
+    color: $primary;
+    border: none;
+    font-family: "Poppins";
+  }
+}
+
+.Backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: black;
+  opacity: 0.2;
+  transition: opacity 150ms cubic-bezier(0.45, 1.005, 0, 1.005);
+
+  @media (prefers-color-scheme: dark) {
+    opacity: 0.7;
+  }
+
+  &[data-starting-style],
+  &[data-ending-style] {
+    opacity: 0;
+  }
+}
+
+.Popup {
+  box-sizing: border-box;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24rem;
+  max-width: calc(100vw - 3rem);
+  margin-top: -2rem;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  outline: 1px solid var(--color-gray-200);
+  background-color: $white;
+  color: $primary;
+  transition: all 150ms;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  @media (prefers-color-scheme: dark) {
+    outline: 1px solid var(--color-gray-300);
+  }
+
+  &[data-starting-style],
+  &[data-ending-style] {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+
+.Actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.Button {
+  font-family: "Poppins";
+  font-size: 16px;
+  line-height: 13px;
+  font-weight: 400;
+  color: $white;
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  height: max-content;
+  align-items: center;
+  justify-content: center;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: $coral;
+  border: none;
+  border-radius: 8px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $lightCoral;
+  }
+
+  &:active,
+  &:disabled {
+    background-color: #cf4249;
+  }
+
+  &_label {
+    font-family: "Poppins";
+    font-size: 20px;
+    line-height: 13px;
+    font-weight: 600;
+    color: $white;
+  }
+}

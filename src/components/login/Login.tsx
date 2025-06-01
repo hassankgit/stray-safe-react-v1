@@ -19,7 +19,7 @@ export default function Login() {
 
   return (
     <Form
-      className={styles.login_section}
+      className={styles.login}
       errors={errors}
       onClearErrors={setErrors}
       onSubmit={async (event) => {
@@ -46,29 +46,29 @@ export default function Login() {
         setLoading(false);
       }}
     >
-      <div className={styles.login_info}>
-        <Field.Root name="username" className={styles.login_input_wrapper}>
+      <div className={styles.input_section}>
+        <Field.Root name="username">
           <Field.Control
-            placeholder="username or email"
-            className={styles.login_input}
+            placeholder="Email or username"
+            className={styles.input}
           />
         </Field.Root>
-        <Field.Root name="password" className={styles.login_input_wrapper}>
+        <Field.Root name="password">
           <Field.Control
-            placeholder="password"
+            placeholder="Password"
             type="password"
-            className={styles.login_input}
+            className={styles.input}
           />
-          <Field.Error className={styles.login_error} />
+          <Field.Error className={styles.error} />
         </Field.Root>
       </div>
-      <button type="submit" className={styles.login_submit} disabled={loading}>
-        {!loading ? "login" : <FaDog className={styles.login_submit_loading} />}
+      <button type="submit" className={styles.submit} disabled={loading}>
+        {!loading ? "Login" : <FaDog className={styles.submit_loading} />}
       </button>
-      <p className={styles.login_register}>
-        don&apos;t have an account?{" "}
-        <Link className={styles.login_register_link} href="/register">
-          register here!
+      <p className={styles.register_link_wrapper}>
+        Don&apos;t have an account?{" "}
+        <Link className={styles.register_link} href="/register">
+          Sign up here!
         </Link>
       </p>
     </Form>

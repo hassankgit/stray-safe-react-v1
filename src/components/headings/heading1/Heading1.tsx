@@ -6,5 +6,7 @@ type Heading1Props = {
 };
 
 export default function Heading1(props: Heading1Props) {
-  return <h1 className={styles.default}>{props.text}</h1>;
+  return (
+    <h1 className={`${styles.default} ${props.className}`}>{props.text}</h1>
+  );
 }

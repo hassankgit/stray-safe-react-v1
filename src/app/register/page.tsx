@@ -7,19 +7,19 @@ export default function RegisterForm() {
   return (
     <div className={styles.app_wrapper}>
       <div className={styles.app_body}>
-        <div className={styles.app_banner_top_wrapper}>
-          <h1>let&apos;s get you started</h1>
+        <div className={styles.body}>
+          <p className={styles.heading}>Let&apos;s get you started</p>
           {hideLogin ? (
             <p style={{ margin: "20px", fontSize: "16px" }}> coming soon! </p>
           ) : (
             <Register />
           )}
         </div>
-        <div className={styles.app_banner_bottom_wrapper}>
+        <div className={styles.trees_wrapper}>
           <img
             alt="bottom register banner"
             src="/images/loginbannerwidebottomhalf.png"
-            className={styles.app_banner_bottom}
+            className={styles.trees}
           />
         </div>
       </div>
