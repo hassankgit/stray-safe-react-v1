@@ -1,6 +1,7 @@
 import {
   Api,
   Coordinates,
+  CreateSightingRequest,
   LoginRequest,
   RegisterRequest,
 } from "../swagger/swagger";
@@ -13,7 +14,6 @@ const fetchWithBearer: typeof fetch = async (input, init = {}) => {
     ...init,
     headers: {
       ...(init.headers || {}),
-      "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
     credentials: "include",
@@ -22,7 +22,6 @@ const fetchWithBearer: typeof fetch = async (input, init = {}) => {
   try {
     const response = await fetch(input, modifiedInit);
     if (response.status == 401) {
-      console.log("signing out...");
       handleSignOut();
     }
     return response;
@@ -71,5 +70,9 @@ export const api = {
       apiInstance.sighting.previewsCreate(request, { format: "json" }),
     detailById: (request: number) =>
       apiInstance.sighting.detailDetail(request, { format: "json" }),
+    upload: (file: File) =>
+      apiInstance.sighting.uploadCreate({ file: file }, { format: "json" }),
+    createSighting: (request: CreateSightingRequest) =>
+      apiInstance.sighting.createCreate(request, { format: "json" }),
   },
 };

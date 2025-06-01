@@ -1,7 +1,7 @@
 "use client";
 import { mapStyle } from "../mapStyle";
 import styles from "./page.module.scss";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap } from "@react-google-maps/api";
 import { useEffect, useRef, useState } from "react";
 import MarkerWithInfoWindow from "@/components/map/marker_with_info_window/MarkerWithInfoWindow";
 import { api } from "../../api";
@@ -11,8 +11,10 @@ import {
   SightingPreview,
 } from "@/swagger/swagger";
 import SightingDetailPanel from "@/components/home/sighting_details/SightingDetail";
+import { useGoogleMaps } from "../../context/GoogleMapsLoaderContext";
 
 export default function MapPage() {
+  const { isLoaded } = useGoogleMaps();
   const containerStyle = {
     width: "100%",
     height: "100%",
@@ -45,18 +47,11 @@ export default function MapPage() {
     }
   };
 
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-  });
-
   const fetchSightings = async (center: Coordinates) => {
     try {
-      setIsLoading(true);
       const res = await api.sighting.previews(center);
       if (res.ok && Array.isArray(res.data)) {
         setSightings(res.data);
-        setIsLoading(false);
       } else {
         console.error("api error!: ", res.error?.Message);
       }

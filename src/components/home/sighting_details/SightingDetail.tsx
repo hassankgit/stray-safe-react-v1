@@ -5,7 +5,6 @@ import Heading4 from "@/components/headings/heading4/Heading4";
 import Tag from "@/components/tag/Tag";
 import InformationItem from "@/components/information/item/InformationItem";
 import TextArea from "@/components/input/custom_input/TextArea";
-import ButtonPrimary from "@/components/input/button_primary/ButtonPrimary";
 import { SightingDetailDto } from "@/swagger/swagger";
 import { getSpottedTimeAgo } from "@/app/utils/getSpottedTimeAgo";
 
@@ -115,10 +114,9 @@ export default function SightingDetailPanel(props: SightingDetailProps) {
               />
               <Heading4
                 text={`Sighted by ${
-                  props.sightingDetails?.submittedByName ?? "unknown user"
-                }: `}
+                  props.sightingDetails?.submittedByName ?? "Unknown user"
+                }`}
               />
-              <ButtonPrimary type="submit" label="contact sighter" />
             </div>
           </div>
         </>

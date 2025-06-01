@@ -33,16 +33,17 @@ export default function MobileNavbar() {
             <p className={styles.label}>Reports</p>
           </div>
         </DisabledFeatureDialog>
-        <DisabledFeatureDialog>
-          <div
-            className={`${styles.navbar_button_wrapper} ${isTabActive(
-              "/home/upload"
-            )}`}
-          >
-            <Camera className={styles.button} />
-            <p className={styles.label}>Upload</p>
-          </div>
-        </DisabledFeatureDialog>
+        <div
+          className={`${styles.navbar_button_wrapper} ${isTabActive(
+            "/home/upload"
+          )}`}
+          onClick={() => {
+            router.push("/home/upload");
+          }}
+        >
+          <Camera className={styles.button} />
+          <p className={styles.label}>Upload</p>
+        </div>
         <div
           className={`${styles.navbar_button_wrapper} ${isTabActive(
             "/home/map"
