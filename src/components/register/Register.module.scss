@@ -1,58 +1,64 @@
 @use "../../styles/_variables.sass" as *;
 
-.register {
-  &_section {
-    z-index: 3;
-    padding-top: 2rem;
-    gap: 1rem;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-  }
+.signup {
+  z-index: 3;
+  padding-top: 2rem;
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
 
-  &_info {
+  .input_section {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     width: 100%;
-  }
 
-  &_input {
-    color: black;
-    width: 100%;
-    background-color: white;
-    height: 2.5rem;
-    font-family: "Nunito";
-    font-size: 1rem;
-    padding-left: 1.5rem;
-    border: none;
-    border-radius: 0.625rem;
-
-    &_wrapper {
+    .input {
+      color: black;
       width: 100%;
+      background-color: white;
+      height: 2.5rem;
+      font-family: "Poppins";
+      font-size: 14px;
+      padding-left: 1.5rem;
+      border: none;
+      border-radius: 0.625rem;
+    }
+
+    .error {
+      margin-top: 0.6rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
       height: max-content;
+      align-items: center;
+      font-size: 0.75rem;
+      color: #ff6969;
+      background-color: #6d0000;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
     }
   }
 
-  &_submit:hover {
-    cursor: pointer;
-  }
-
-  &_submit:active,
-  &_submit:disabled {
-    background-color: #cf4249;
-  }
-
-  &_submit {
+  .submit {
     color: $white;
     width: 100%;
     background-color: $coral;
     height: 2.5rem;
-    font-family: "Nunito";
+    font-family: "Poppins";
     font-size: 1rem;
     border: none;
     border-radius: 0.6rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+    &:active,
+    &:disabled {
+      background-color: #cf4249;
+    }
 
     &_loading {
       margin-top: 0.5rem;
@@ -60,35 +66,23 @@
     }
   }
 
-  @keyframes floatUpDown {
-    0% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-0.313rem); // adjust for how high you want it
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-  &_error {
-    margin-top: 0.6rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    height: max-content;
-    align-items: center;
-    font-size: 0.75rem;
-    color: #ff6969;
-    background-color: #6d0000;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-  }
-  &_login {
+  .login_link_wrapper {
     font-size: 0.75rem;
 
-    &_link {
+    .login_link {
       color: #f9becf;
     }
+  }
+}
+
+@keyframes floatUpDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.313rem);
+  }
+  100% {
+    transform: translateY(0);
   }
 }

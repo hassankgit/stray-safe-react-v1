@@ -10,9 +10,29 @@
  * ---------------------------------------------------------------
  */
 
+export enum EAnimalStatus {
+  SAFE_WITH_ME = "SAFE_WITH_ME",
+  STILL_ROAMING = "STILL_ROAMING",
+  DECEASED = "DECEASED",
+  UNKNOWN = "UNKNOWN",
+}
+
 export enum EAnimalSex {
   MALE = "MALE",
   FEMALE = "FEMALE",
+  UNKNOWN = "UNKNOWN",
+}
+
+export enum EAnimalHealth {
+  HEALTHY = "HEALTHY",
+  INJURED = "INJURED",
+  UNKNOWN = "UNKNOWN",
+}
+
+export enum EAnimalBehavior {
+  FRIENDLY = "FRIENDLY",
+  AGGRESSIVE = "AGGRESSIVE",
+  TIMID = "TIMID",
   UNKNOWN = "UNKNOWN",
 }
 
@@ -24,6 +44,7 @@ export enum EAnimalAge {
   TWO_TO_FIVE_YEARS = "TWO_TO_FIVE_YEARS",
   FIVE_TO_TEN_YEARS = "FIVE_TO_TEN_YEARS",
   TEN_PLUS_YEARS = "TEN_PLUS_YEARS",
+  UNKNOWN = "UNKNOWN",
 }
 
 export interface AppMetadata {
@@ -36,6 +57,28 @@ export interface Coordinates {
   latitude?: number | null;
   /** @format double */
   longitude?: number | null;
+}
+
+export interface CreateSightingRequest {
+  name?: string | null;
+  species?: string | null;
+  breed?: string | null;
+  /** @format date-time */
+  dateTime?: string | null;
+  coordinates: Coordinates;
+  location?: string | null;
+  imageUrl?: string | null;
+  age?: EAnimalAge;
+  sex?: EAnimalSex;
+  status?: EAnimalStatus;
+  behavior?: EAnimalBehavior;
+  health?: EAnimalHealth;
+  notes?: string | null;
+}
+
+export interface CreateSightingResponseDto {
+  /** @format int32 */
+  sightingId?: number | null;
 }
 
 export interface LoginRequest {
@@ -51,14 +94,15 @@ export interface RegisterRequest {
   password: string;
 }
 
-export interface SightingDetail {
+export interface SightingDetailDto {
   /** @format int32 */
   id?: number;
   name?: string | null;
   species?: string | null;
   breed?: string | null;
-  age?: EAnimalAge;
-  sex?: EAnimalSex;
+  age?: string | null;
+  sex?: string | null;
+  tags?: string[] | null;
   imageUrl?: string | null;
   /** @format date-time */
   lastSpotted?: string;
@@ -66,9 +110,6 @@ export interface SightingDetail {
   notes?: string | null;
   submittedById: string | null;
   submittedByName?: string | null;
-  ageLabel?: string | null;
-  sexLabel?: string | null;
-  tagsArray?: string[] | null;
 }
 
 export interface SightingPreview {
@@ -90,6 +131,13 @@ export interface TokenDto {
   token: string | null;
 }
 
+export interface UploadResponseDto {
+  url?: string | null;
+  /** @format date-time */
+  dateTime?: string | null;
+  coordinates?: Coordinates;
+}
+
 export interface User {
   id: string | null;
   email: string | null;
@@ -109,6 +157,14 @@ export interface User {
   /** @format date-time */
   updated_at?: string | null;
   is_anonymous?: boolean;
+}
+
+export interface UserDto {
+  id: string | null;
+  email: string | null;
+  username?: string | null;
+  role?: string | null;
+  phone?: string | null;
 }
 
 export interface UserMetadata {
@@ -146,7 +202,7 @@ export interface ApiConfig<SecurityDataType = unknown> {
   baseUrl?: string;
   baseApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
   securityWorker?: (
-    securityData: SecurityDataType | null,
+    securityData: SecurityDataType | null
   ) => Promise<RequestParams | void> | RequestParams | void;
   customFetch?: typeof fetch;
 }
@@ -191,7 +247,9 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected encodeQueryParam(key: string, value: any) {
     const encodedKey = encodeURIComponent(key);
-    return `${encodedKey}=${encodeURIComponent(typeof value === "number" ? value : `${value}`)}`;
+    return `${encodedKey}=${encodeURIComponent(
+      typeof value === "number" ? value : `${value}`
+    )}`;
   }
 
   protected addQueryParam(query: QueryParamsType, key: string) {
@@ -206,13 +264,13 @@ export class HttpClient<SecurityDataType = unknown> {
   protected toQueryString(rawQuery?: QueryParamsType): string {
     const query = rawQuery || {};
     const keys = Object.keys(query).filter(
-      (key) => "undefined" !== typeof query[key],
+      (key) => "undefined" !== typeof query[key]
     );
     return keys
       .map((key) =>
         Array.isArray(query[key])
           ? this.addArrayQueryParam(query, key)
-          : this.addQueryParam(query, key),
+          : this.addQueryParam(query, key)
       )
       .join("&");
   }
@@ -239,8 +297,8 @@ export class HttpClient<SecurityDataType = unknown> {
           property instanceof Blob
             ? property
             : typeof property === "object" && property !== null
-              ? JSON.stringify(property)
-              : `${property}`,
+            ? JSON.stringify(property)
+            : `${property}`
         );
         return formData;
       }, new FormData()),
@@ -249,7 +307,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected mergeRequestParams(
     params1: RequestParams,
-    params2?: RequestParams,
+    params2?: RequestParams
   ): RequestParams {
     return {
       ...this.baseApiParams,
@@ -264,7 +322,7 @@ export class HttpClient<SecurityDataType = unknown> {
   }
 
   protected createAbortSignal = (
-    cancelToken: CancelToken,
+    cancelToken: CancelToken
   ): AbortSignal | undefined => {
     if (this.abortControllers.has(cancelToken)) {
       const abortController = this.abortControllers.get(cancelToken);
@@ -310,7 +368,9 @@ export class HttpClient<SecurityDataType = unknown> {
     const responseFormat = format || requestParams.format;
 
     return this.customFetch(
-      `${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`,
+      `${baseUrl || this.baseUrl || ""}${path}${
+        queryString ? `?${queryString}` : ""
+      }`,
       {
         ...requestParams,
         headers: {
@@ -327,7 +387,7 @@ export class HttpClient<SecurityDataType = unknown> {
           typeof body === "undefined" || body === null
             ? null
             : payloadFormatter(body),
-      },
+      }
     ).then(async (response) => {
       const r = response.clone() as HttpResponse<T, E>;
       r.data = null as unknown as T;
@@ -366,7 +426,7 @@ export class HttpClient<SecurityDataType = unknown> {
  * welcome to straysafe API
  */
 export class Api<
-  SecurityDataType extends unknown,
+  SecurityDataType extends unknown
 > extends HttpClient<SecurityDataType> {
   admin = {
     /**
@@ -454,6 +514,87 @@ export class Api<
      * @secure
      */
     detailDetail: (id: number, params: RequestParams = {}) =>
+      this.request<SightingDetailDto, any>({
+        path: `/Sighting/Detail/${id}`,
+        method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Sighting
+     * @name UploadCreate
+     * @request POST:/Sighting/Upload
+     * @secure
+     */
+    uploadCreate: (
+      data: {
+        /** @format binary */
+        file?: File;
+      },
+      params: RequestParams = {}
+    ) =>
+      this.request<UploadResponseDto, any>({
+        path: `/Sighting/Upload`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Sighting
+     * @name CreateCreate
+     * @request POST:/Sighting/Create
+     * @secure
+     */
+    createCreate: (data: CreateSightingRequest, params: RequestParams = {}) =>
+      this.request<CreateSightingResponseDto, any>({
+        path: `/Sighting/Create`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+  };
+  sighting = {
+    /**
+     * No description
+     *
+     * @tags Sighting
+     * @name PreviewsCreate
+     * @request POST:/Sighting/Previews
+     * @secure
+     */
+    previewsCreate: (data: Coordinates, params: RequestParams = {}) =>
+      this.request<SightingPreview[], any>({
+        path: `/Sighting/Previews`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Sighting
+     * @name DetailDetail
+     * @request GET:/Sighting/Detail/{id}
+     * @secure
+     */
+    detailDetail: (id: number, params: RequestParams = {}) =>
       this.request<SightingDetail, any>({
         path: `/Sighting/Detail/${id}`,
         method: "GET",
@@ -472,7 +613,7 @@ export class Api<
      * @secure
      */
     getUser: (params: RequestParams = {}) =>
-      this.request<User, any>({
+      this.request<UserDto, any>({
         path: `/User/Me`,
         method: "GET",
         secure: true,
