@@ -5,6 +5,7 @@ import { useState } from "react";
 import { api } from "@/app/api";
 import { UploadResponseDto } from "@/swagger/swagger";
 import UploadSightingForm from "@/components/upload/UploadSightingForm";
+import { FaDog } from "react-icons/fa6";
 
 export default function Upload() {
   const [uploadResponse, setUploadResponse] = useState<UploadResponseDto>();
@@ -32,7 +33,11 @@ export default function Upload() {
 
   return (
     <div className={styles.body}>
-      {!isFileUploaded ? (
+      {isLoading ? (
+        <div className={styles.loader_wrapper}>
+          <FaDog className={styles.loader} />
+        </div>
+      ) : !isFileUploaded ? (
         <>
           <img
             className={styles.image}
@@ -58,6 +63,7 @@ export default function Upload() {
           />
         </>
       )}
+      {}
     </div>
   );
 }
