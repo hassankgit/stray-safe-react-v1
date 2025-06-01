@@ -6,6 +6,7 @@ import { api } from "@/app/api";
 import { UploadResponseDto } from "@/swagger/swagger";
 import UploadSightingForm from "@/components/upload/UploadSightingForm";
 import { FaDog } from "react-icons/fa6";
+import imageCompression from "browser-image-compression";
 
 export default function Upload() {
   const [uploadResponse, setUploadResponse] = useState<UploadResponseDto>();
@@ -18,8 +19,16 @@ export default function Upload() {
     if (!file) {
       return;
     }
+
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
+
     try {
-      const response = await api.sighting.upload(file);
+      const compressedFile = await imageCompression(file, options);
+      const response = await api.sighting.upload(compressedFile);
       if (response.ok && response.data) {
         setUploadResponse(response.data);
         setIsLoading(false);
