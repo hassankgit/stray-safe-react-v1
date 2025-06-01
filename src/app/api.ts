@@ -1,6 +1,5 @@
 import {
   Api,
-  // ContentType,
   Coordinates,
   CreateSightingRequest,
   LoginRequest,
@@ -15,7 +14,6 @@ const fetchWithBearer: typeof fetch = async (input, init = {}) => {
     ...init,
     headers: {
       ...(init.headers || {}),
-      // "Content-Type": "application/json", // TODO make sure this doesn't break anything
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
     credentials: "include",

@@ -76,7 +76,7 @@
   }
 }
 
-// Stops the trees from touching the login area
+// Stops trees from touching login area
 @media (max-height: 850px) {
   .body {
     margin-top: 10vh;
@@ -88,7 +88,7 @@
   }
 }
 
-// Expands the trees to fill out on desktop resolutions
+// Expands trees to fill out on desktop resolutions
 @media (min-width: 1200px) {
   .trees_wrapper {
     width: 100%;
