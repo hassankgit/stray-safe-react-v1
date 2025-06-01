@@ -10,9 +10,29 @@
  * ---------------------------------------------------------------
  */
 
+export enum EAnimalStatus {
+  SAFE_WITH_ME = "SAFE_WITH_ME",
+  STILL_ROAMING = "STILL_ROAMING",
+  DECEASED = "DECEASED",
+  UNKNOWN = "UNKNOWN",
+}
+
 export enum EAnimalSex {
   MALE = "MALE",
   FEMALE = "FEMALE",
+  UNKNOWN = "UNKNOWN",
+}
+
+export enum EAnimalHealth {
+  HEALTHY = "HEALTHY",
+  INJURED = "INJURED",
+  UNKNOWN = "UNKNOWN",
+}
+
+export enum EAnimalBehavior {
+  FRIENDLY = "FRIENDLY",
+  AGGRESSIVE = "AGGRESSIVE",
+  TIMID = "TIMID",
   UNKNOWN = "UNKNOWN",
 }
 
@@ -24,6 +44,7 @@ export enum EAnimalAge {
   TWO_TO_FIVE_YEARS = "TWO_TO_FIVE_YEARS",
   FIVE_TO_TEN_YEARS = "FIVE_TO_TEN_YEARS",
   TEN_PLUS_YEARS = "TEN_PLUS_YEARS",
+  UNKNOWN = "UNKNOWN",
 }
 
 export interface AppMetadata {
@@ -36,6 +57,28 @@ export interface Coordinates {
   latitude?: number | null;
   /** @format double */
   longitude?: number | null;
+}
+
+export interface CreateSightingRequest {
+  name?: string | null;
+  species?: string | null;
+  breed?: string | null;
+  /** @format date-time */
+  dateTime?: string | null;
+  coordinates: Coordinates;
+  location?: string | null;
+  imageUrl?: string | null;
+  age?: EAnimalAge;
+  sex?: EAnimalSex;
+  status?: EAnimalStatus;
+  behavior?: EAnimalBehavior;
+  health?: EAnimalHealth;
+  notes?: string | null;
+}
+
+export interface CreateSightingResponseDto {
+  /** @format int32 */
+  sightingId?: number | null;
 }
 
 export interface LoginRequest {
@@ -51,14 +94,15 @@ export interface RegisterRequest {
   password: string;
 }
 
-export interface SightingDetail {
+export interface SightingDetailDto {
   /** @format int32 */
   id?: number;
   name?: string | null;
   species?: string | null;
   breed?: string | null;
-  age?: EAnimalAge;
-  sex?: EAnimalSex;
+  age?: string | null;
+  sex?: string | null;
+  tags?: string[] | null;
   imageUrl?: string | null;
   /** @format date-time */
   lastSpotted?: string;
@@ -66,9 +110,6 @@ export interface SightingDetail {
   notes?: string | null;
   submittedById: string | null;
   submittedByName?: string | null;
-  ageLabel?: string | null;
-  sexLabel?: string | null;
-  tagsArray?: string[] | null;
 }
 
 export interface SightingPreview {
@@ -90,6 +131,13 @@ export interface TokenDto {
   token: string | null;
 }
 
+export interface UploadResponseDto {
+  url?: string | null;
+  /** @format date-time */
+  dateTime?: string | null;
+  coordinates?: Coordinates;
+}
+
 export interface User {
   id: string | null;
   email: string | null;
@@ -109,6 +157,14 @@ export interface User {
   /** @format date-time */
   updated_at?: string | null;
   is_anonymous?: boolean;
+}
+
+export interface UserDto {
+  id: string | null;
+  email: string | null;
+  username?: string | null;
+  role?: string | null;
+  phone?: string | null;
 }
 
 export interface UserMetadata {
@@ -454,10 +510,54 @@ export class Api<
      * @secure
      */
     detailDetail: (id: number, params: RequestParams = {}) =>
-      this.request<SightingDetail, any>({
+      this.request<SightingDetailDto, any>({
         path: `/Sighting/Detail/${id}`,
         method: "GET",
         secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Sighting
+     * @name UploadCreate
+     * @request POST:/Sighting/Upload
+     * @secure
+     */
+    uploadCreate: (
+      data: {
+        /** @format binary */
+        file?: File;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<UploadResponseDto, any>({
+        path: `/Sighting/Upload`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.FormData,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Sighting
+     * @name CreateCreate
+     * @request POST:/Sighting/Create
+     * @secure
+     */
+    createCreate: (data: CreateSightingRequest, params: RequestParams = {}) =>
+      this.request<CreateSightingResponseDto, any>({
+        path: `/Sighting/Create`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
         format: "json",
         ...params,
       }),
@@ -472,7 +572,7 @@ export class Api<
      * @secure
      */
     getUser: (params: RequestParams = {}) =>
-      this.request<User, any>({
+      this.request<UserDto, any>({
         path: `/User/Me`,
         method: "GET",
         secure: true,

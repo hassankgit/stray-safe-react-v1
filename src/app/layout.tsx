@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import type { Metadata } from "next";
-import "./globals.css";
-import { Nunito } from "next/font/google";
+import "./globals.scss";
+import { Poppins } from "next/font/google";
 
-const nunito = Nunito({
+const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
 });

@@ -6,5 +6,7 @@ type Heading4Props = {
 };
 
 export default function Heading4(props: Heading4Props) {
-  return <h4 className={styles.default}>{props.text}</h4>;
+  return (
+    <h4 className={`${styles.default} ${props.className}`}>{props.text}</h4>
+  );
 }

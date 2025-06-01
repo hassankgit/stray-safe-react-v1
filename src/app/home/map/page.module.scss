@@ -1,0 +1,19 @@
+@use "../../../styles/_variables.sass" as *;
+
+.map_container {
+  width: 100%;
+  height: 100%;
+  //testing
+  flex: 1;
+  transition: 0.3s;
+}
+
+.sighting_details_map_wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: row;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  position: relative;
+}

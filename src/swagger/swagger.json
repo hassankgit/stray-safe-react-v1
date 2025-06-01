@@ -213,17 +213,110 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/SightingDetail"
+                  "$ref": "#/components/schemas/SightingDetailDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SightingDetail"
+                  "$ref": "#/components/schemas/SightingDetailDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SightingDetail"
+                  "$ref": "#/components/schemas/SightingDetailDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Sighting/Upload": {
+      "post": {
+        "tags": ["Sighting"],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Sighting/Create": {
+      "post": {
+        "tags": ["Sighting"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSightingRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSightingRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSightingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSightingResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSightingResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSightingResponseDto"
                 }
               }
             }
@@ -240,17 +333,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/UserDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/UserDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/UserDto"
                 }
               }
             }
@@ -294,6 +387,71 @@
         },
         "additionalProperties": false
       },
+      "CreateSightingRequest": {
+        "required": ["coordinates"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "species": {
+            "type": "string",
+            "nullable": true
+          },
+          "breed": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "coordinates": {
+            "$ref": "#/components/schemas/Coordinates"
+          },
+          "location": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "age": {
+            "$ref": "#/components/schemas/EAnimalAge"
+          },
+          "sex": {
+            "$ref": "#/components/schemas/EAnimalSex"
+          },
+          "status": {
+            "$ref": "#/components/schemas/EAnimalStatus"
+          },
+          "behavior": {
+            "$ref": "#/components/schemas/EAnimalBehavior"
+          },
+          "health": {
+            "$ref": "#/components/schemas/EAnimalHealth"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateSightingResponseDto": {
+        "type": "object",
+        "properties": {
+          "sightingId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "EAnimalAge": {
         "enum": [
           "ONE_TO_THREE_MONTHS",
@@ -302,12 +460,25 @@
           "ONE_TO_TWO_YEARS",
           "TWO_TO_FIVE_YEARS",
           "FIVE_TO_TEN_YEARS",
-          "TEN_PLUS_YEARS"
+          "TEN_PLUS_YEARS",
+          "UNKNOWN"
         ],
+        "type": "string"
+      },
+      "EAnimalBehavior": {
+        "enum": ["FRIENDLY", "AGGRESSIVE", "TIMID", "UNKNOWN"],
+        "type": "string"
+      },
+      "EAnimalHealth": {
+        "enum": ["HEALTHY", "INJURED", "UNKNOWN"],
         "type": "string"
       },
       "EAnimalSex": {
         "enum": ["MALE", "FEMALE", "UNKNOWN"],
+        "type": "string"
+      },
+      "EAnimalStatus": {
+        "enum": ["SAFE_WITH_ME", "STILL_ROAMING", "DECEASED", "UNKNOWN"],
         "type": "string"
       },
       "LoginRequest": {
@@ -343,7 +514,7 @@
         },
         "additionalProperties": false
       },
-      "SightingDetail": {
+      "SightingDetailDto": {
         "required": ["submittedById"],
         "type": "object",
         "properties": {
@@ -364,10 +535,19 @@
             "nullable": true
           },
           "age": {
-            "$ref": "#/components/schemas/EAnimalAge"
+            "type": "string",
+            "nullable": true
           },
           "sex": {
-            "$ref": "#/components/schemas/EAnimalSex"
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
           },
           "imageUrl": {
             "type": "string",
@@ -392,24 +572,6 @@
           "submittedByName": {
             "type": "string",
             "nullable": true
-          },
-          "ageLabel": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "sexLabel": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "tagsArray": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true,
-            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -464,6 +626,24 @@
           "token": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UploadResponseDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "coordinates": {
+            "$ref": "#/components/schemas/Coordinates"
           }
         },
         "additionalProperties": false
@@ -525,6 +705,33 @@
           },
           "is_anonymous": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserDto": {
+        "required": ["email", "id"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
