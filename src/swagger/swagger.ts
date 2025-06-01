@@ -562,43 +562,6 @@ export class Api<
         ...params,
       }),
   };
-  sighting = {
-    /**
-     * No description
-     *
-     * @tags Sighting
-     * @name PreviewsCreate
-     * @request POST:/Sighting/Previews
-     * @secure
-     */
-    previewsCreate: (data: Coordinates, params: RequestParams = {}) =>
-      this.request<SightingPreview[], any>({
-        path: `/Sighting/Previews`,
-        method: "POST",
-        body: data,
-        secure: true,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Sighting
-     * @name DetailDetail
-     * @request GET:/Sighting/Detail/{id}
-     * @secure
-     */
-    detailDetail: (id: number, params: RequestParams = {}) =>
-      this.request<SightingDetail, any>({
-        path: `/Sighting/Detail/${id}`,
-        method: "GET",
-        secure: true,
-        format: "json",
-        ...params,
-      }),
-  };
   user = {
     /**
      * No description
