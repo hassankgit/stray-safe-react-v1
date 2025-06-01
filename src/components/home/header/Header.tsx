@@ -1,4 +1,3 @@
-import { Dialog } from "@base-ui-components/react";
 import styles from "./Header.module.scss";
 import { LuLogOut } from "react-icons/lu";
 import { handleSignOut } from "@/app/api";
