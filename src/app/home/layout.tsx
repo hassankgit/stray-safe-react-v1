@@ -1,5 +1,8 @@
 "use client";
 
+// The sidebar is currently hidden while I'm bugfixing. A lot of these comments
+// will be removed in a future update.
+
 import Header from "@/components/home/header/Header";
 import styles from "./layout.module.scss";
 import { useRedirectIfUnauthenticated } from "../hooks/useRedirectIfUnauthenticated";
