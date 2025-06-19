@@ -12,18 +12,17 @@ import {
 } from "@/swagger/swagger";
 import SightingDetailPanel from "@/components/home/sighting_details/SightingDetail";
 import { useGoogleMaps } from "../../context/GoogleMapsLoaderContext";
+import AddressAutocomplete from "@/components/input/address_autocomplete/AddressAutocomplete";
 
 export default function MapPage() {
+  const [centerPos, setCenterPos] = useState<Coordinates>({
+    latitude: 39.95875593972431,
+    longitude: -75.19256400832441,
+  });
   const { isLoaded } = useGoogleMaps();
   const containerStyle = {
     width: "100%",
     height: "100%",
-  };
-
-  // TODO: Temporary, switch out for location services or ask for a starting location through search
-  const centerPos = {
-    latitude: 39.95875593972431,
-    longitude: -75.19256400832441,
   };
 
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
@@ -35,6 +34,7 @@ export default function MapPage() {
   const [sightings, setSightings] = useState<SightingPreview[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isUserInteracting, setIsUserInteracting] = useState(false);
+  const [gettingCurrentLocation, setGettingCurrentLocaton] = useState(false);
 
   const handleGetDetailsPanelContent = async (id: number) => {
     setIsLoading(true);
@@ -80,19 +80,64 @@ export default function MapPage() {
   };
 
   useEffect(() => {
-    fetchSightings(centerPos);
+    setGettingCurrentLocaton(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const userCoords: Coordinates = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        };
+        setCenterPos(userCoords);
+        fetchSightings(userCoords);
+        setGettingCurrentLocaton(false);
+      },
+      (error) => {
+        console.log(error.message);
+        setCenterPos(centerPos);
+        fetchSightings(centerPos);
+        setGettingCurrentLocaton(false);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+      }
+    );
   }, []);
 
   return (
     <div className={styles.sighting_details_map_wrapper}>
+      {isLoaded && !openDetail && !gettingCurrentLocation && (
+        <div className={styles.map_search_input_wrapper}>
+          <AddressAutocomplete
+            className={styles.map_search_input}
+            onSelect={(address, coords) => {
+              setCenterPos({
+                latitude: coords.lat,
+                longitude: coords.lng,
+              });
+
+              if (mapRef.current) {
+                mapRef.current.setCenter(coords);
+              }
+
+              fetchSightings({
+                latitude: coords.lat,
+                longitude: coords.lng,
+              });
+            }}
+          />
+        </div>
+      )}
+
       <div className={styles.map_container}>
-        {isLoaded && (
+        {isLoaded && !gettingCurrentLocation && (
           <GoogleMap
             onLoad={(map: google.maps.Map) => {
               mapRef.current = map;
               map.setCenter({
-                lat: centerPos.latitude,
-                lng: centerPos.longitude,
+                lat: centerPos.latitude!,
+                lng: centerPos.longitude!,
               });
               map.addListener("dragstart", () => setIsUserInteracting(true));
               map.addListener("zoom_changed", () => setIsUserInteracting(true));
