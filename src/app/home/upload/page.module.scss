@@ -32,6 +32,36 @@
   }
 }
 
+.loader_wrapper {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.loader {
+  color: $primary;
+  margin-left: 40px;
+  margin-top: 40px;
+  width: 80px;
+  height: auto;
+  animation: floatUpDown 1s ease-in-out infinite;
+}
+
+@keyframes floatUpDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 .primary {
   max-width: 300px;
   display: flex;

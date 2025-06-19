@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 type AddressAutocompleteProps = {
-  name: string;
+  name?: string;
   onSelect: (address: string, coords: { lat: number; lng: number }) => void;
   defaultValue?: string;
   className?: string;
