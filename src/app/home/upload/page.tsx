@@ -19,25 +19,18 @@ export default function Upload() {
     if (!file) {
       return;
     }
-
     const options = {
       maxSizeMB: 1,
       maxWidthOrHeight: 1920,
       useWebWorker: true,
     };
-
-    try {
-      const compressedFile = await imageCompression(file, options);
-      const response = await api.sighting.upload(compressedFile);
-      if (response.ok && response.data) {
-        setUploadResponse(response.data);
-        setIsLoading(false);
-        setIsFileUploaded(true);
-      }
-      setIsLoading(false);
-    } catch (error) {
-      console.log("Upload failed", error);
+    const compressedFile = await imageCompression(file, options);
+    const data = await api.sighting.upload(compressedFile);
+    if (data) {
+      setUploadResponse(data);
+      setIsFileUploaded(true);
     }
+    setIsLoading(false);
   };
 
   return (

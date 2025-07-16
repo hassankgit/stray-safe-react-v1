@@ -1,7 +1,7 @@
 "use client";
 import styles from "./Login.module.scss";
 import { Field } from "@base-ui-components/react/field";
-import { api } from "../../app/api";
+import { api, ApiError } from "../../app/api";
 import React, { useState } from "react";
 import { LoginRequest } from "@/swagger/swagger";
 import { Form } from "@base-ui-components/react";
@@ -33,10 +33,10 @@ export default function Login() {
 
         setLoading(true);
         const res = await handleLogin(loginRequest);
-        if (!res.success) {
+        if (!res?.success) {
           const serverErrors = {
-            username: res.error,
-            password: res.error,
+            username: res?.error,
+            password: res?.error,
           };
           setErrors(serverErrors);
         } else {
@@ -76,17 +76,17 @@ export default function Login() {
 }
 
 async function handleLogin(request: LoginRequest) {
-  const res = await api.auth.login(request);
-
-  if (res.ok && res.data.token) {
-    localStorage.setItem("token", res.data.token);
-    return {
-      success: true,
-    };
-  } else {
+  try {
+    const data = await api.auth.login(request);
+    if (data?.token) {
+      localStorage.setItem("token", data.token);
+      return { success: true };
+    }
+  } catch (err) {
+    const error = err as ApiError;
     return {
       success: false,
-      error: res.error?.Message || "",
+      error: error.Message,
     };
   }
 }

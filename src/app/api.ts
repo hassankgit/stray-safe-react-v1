@@ -2,10 +2,35 @@ import {
   Api,
   Coordinates,
   CreateSightingRequest,
+  HttpResponse,
   LoginRequest,
   RegisterRequest,
 } from "../swagger/swagger";
 import { isProd } from "./utils/utils";
+
+export type ApiError = {
+  StatusCode: number;
+  Message: string;
+};
+
+async function handleApiCall<T>(
+  promise: Promise<HttpResponse<T, ApiError>>
+): Promise<T> {
+  try {
+    const res = await promise;
+    if (res.ok) {
+      return res.data;
+    } else {
+      throw res.error as ApiError;
+    }
+  } catch (err) {
+    const error = err as ApiError;
+    if (error.StatusCode == 500) {
+      console.error("straysafe is down. Please try again later: ", error);
+    }
+    throw error;
+  }
+}
 
 const fetchWithBearer: typeof fetch = async (input, init = {}) => {
   const token = localStorage.getItem("token");
@@ -58,21 +83,32 @@ export const handleSignOut = () => {
 export const api = {
   auth: {
     login: (request: LoginRequest) =>
-      apiInstance.auth.loginCreate(request, { format: "json" }),
+      handleApiCall(apiInstance.auth.loginCreate(request, { format: "json" })),
     register: (request: RegisterRequest) =>
-      apiInstance.auth.registerCreate(request, { format: "json" }),
+      handleApiCall(
+        apiInstance.auth.registerCreate(request, { format: "json" })
+      ),
   },
   admin: {
-    allUsers: () => apiInstance.admin.usersAllList({ format: "json" }),
+    allUsers: () =>
+      handleApiCall(apiInstance.admin.usersAllList({ format: "json" })),
   },
   sighting: {
     previews: (request: Coordinates) =>
-      apiInstance.sighting.previewsCreate(request, { format: "json" }),
+      handleApiCall(
+        apiInstance.sighting.previewsCreate(request, { format: "json" })
+      ),
     detailById: (request: number) =>
-      apiInstance.sighting.detailDetail(request, { format: "json" }),
+      handleApiCall(
+        apiInstance.sighting.detailDetail(request, { format: "json" })
+      ),
     upload: (file: File) =>
-      apiInstance.sighting.uploadCreate({ file: file }, { format: "json" }),
+      handleApiCall(
+        apiInstance.sighting.uploadCreate({ file: file }, { format: "json" })
+      ),
     createSighting: (request: CreateSightingRequest) =>
-      apiInstance.sighting.createCreate(request, { format: "json" }),
+      handleApiCall(
+        apiInstance.sighting.createCreate(request, { format: "json" })
+      ),
   },
 };
