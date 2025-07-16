@@ -38,9 +38,9 @@ export default function MapPage() {
 
   const handleGetDetailsPanelContent = async (id: number) => {
     setIsLoading(true);
-    const res = await api.sighting.detailById(id);
-    if (res.ok) {
-      setDetailsPanelContent(res.data);
+    const data = await api.sighting.detailById(id);
+    if (data) {
+      setDetailsPanelContent(data);
       setIsLoading(false);
     } else {
       setDetailsPanelContent(undefined);
@@ -48,15 +48,9 @@ export default function MapPage() {
   };
 
   const fetchSightings = async (center: Coordinates) => {
-    try {
-      const res = await api.sighting.previews(center);
-      if (res.ok && Array.isArray(res.data)) {
-        setSightings(res.data);
-      } else {
-        console.error("api error!: ", res.error?.Message);
-      }
-    } catch (err) {
-      console.error("failed to fetch sightings!: ", err);
+    const data = await api.sighting.previews(center);
+    if (data) {
+      setSightings(data);
     }
   };
 
@@ -141,6 +135,10 @@ export default function MapPage() {
               });
               map.addListener("dragstart", () => setIsUserInteracting(true));
               map.addListener("zoom_changed", () => setIsUserInteracting(true));
+              fetchSightings({
+                latitude: centerPos.latitude,
+                longitude: centerPos.longitude,
+              });
             }}
             onIdle={handleMapIdle}
             options={{

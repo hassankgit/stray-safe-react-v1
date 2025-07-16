@@ -11,7 +11,7 @@ import {
   EAnimalStatus,
 } from "@/swagger/swagger";
 import { Field, Form } from "@base-ui-components/react";
-import { api } from "../../app/api";
+import { api, ApiError } from "../../app/api";
 import { useEffect, useState } from "react";
 import { FaDog } from "react-icons/fa6";
 import CustomSelect from "../input/select/Select";
@@ -113,8 +113,8 @@ export default function UploadSightingForm(props: UploadSightingFormProps) {
           };
           setLoading(true);
           const res = await handleSightingCreate(sightingCreateRequest);
-          if (!res.success) {
-            console.log(res.error);
+          if (!res?.success) {
+            console.log(res?.error);
           } else {
             router.push("/home/upload/success");
           }
@@ -274,16 +274,16 @@ export default function UploadSightingForm(props: UploadSightingFormProps) {
 }
 
 async function handleSightingCreate(request: CreateSightingRequest) {
-  const res = await api.sighting.createSighting(request);
-
-  if (res.ok) {
-    return {
-      success: true,
-    };
-  } else {
+  try {
+    const data = await api.sighting.createSighting(request);
+    if (data) {
+      return { success: true };
+    }
+  } catch (err) {
+    const error = err as ApiError;
     return {
       success: false,
-      error: res.error?.Message || "",
+      error: error.Message,
     };
   }
 }

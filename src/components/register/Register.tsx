@@ -1,7 +1,7 @@
 "use client";
 import styles from "./Register.module.scss";
 import { Field } from "@base-ui-components/react/field";
-import { api } from "../../app/api";
+import { api, ApiError } from "../../app/api";
 import React, { useState } from "react";
 import { RegisterRequest } from "@/swagger/swagger";
 import { Form } from "@base-ui-components/react";
@@ -52,10 +52,10 @@ export default function RegisterForm() {
 
         setLoading(true);
         const res = await handleRegister(registerRequest);
-        if (!res.success) {
+        if (!res?.success) {
           const serverErrors = {
-            username: res.error,
-            password: res.error,
+            username: res?.error,
+            password: res?.error,
           };
           setErrors(serverErrors);
         } else {
@@ -109,15 +109,17 @@ export default function RegisterForm() {
 }
 
 async function handleRegister(request: RegisterRequest) {
-  const res = await api.auth.register(request);
-
-  if (res.ok && res.data.token) {
-    localStorage.setItem("token", res.data.token);
-    return { success: true };
-  } else {
+  try {
+    const data = await api.auth.register(request);
+    if (data?.token) {
+      localStorage.setItem("token", data.token);
+      return { success: true };
+    }
+  } catch (err) {
+    const error = err as ApiError;
     return {
       success: false,
-      error: res.error?.Message || "",
+      error: error.Message,
     };
   }
 }
