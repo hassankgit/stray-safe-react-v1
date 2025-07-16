@@ -14,7 +14,7 @@ export type ApiError = {
 };
 
 async function handleApiCall<T>(
-  promise: Promise<HttpResponse<T, any>>
+  promise: Promise<HttpResponse<T, ApiError>>
 ): Promise<T> {
   try {
     const res = await promise;
